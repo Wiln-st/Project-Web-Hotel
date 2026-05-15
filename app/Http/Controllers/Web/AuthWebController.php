@@ -15,17 +15,23 @@ class AuthWebController extends Controller
 
     public function login(Request $request)
     {
-         $credentials = request()->validate([
+        $credentials = request()->validate([
             'email' => 'required|email',
             'password' => 'required'
-         ]);
+        ]);
 
-         if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            return redirect('/dashboard');
-         }
+            if (Auth::user()->role === 'admin') {
+                return redirect()->intended('admin/dashboard');
 
-         return back()->with('error', 'Email atau password salah');
+            } elseif (Auth::user()->role === 'employee') {
+                return redirect()->intended('employee/room');
+                
+            }
+        }
+
+        return back()->with('error', 'Email atau password salah');
     }
 }

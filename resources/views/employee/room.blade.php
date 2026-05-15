@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    @include('admin.partials.sidebar')
+    @include('employee.partials.sidebar')
 </body>
 
 </html>
