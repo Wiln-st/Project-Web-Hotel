@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    @vite('resources/css/app.css')
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body>
-    <aside class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-slate-900 border-r border-slate-700">
+    <aside class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-slate-900 border-r border-slate-700 fixed">
         <!-- Brand Logo -->
         <div class="flex items-center gap-x-3 px-2">
             <div class="p-2 bg-amber-500 rounded-lg">
@@ -33,7 +34,7 @@
 
                 <!-- Kelola Kamar -->
                 <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group">
-                    <i class="fas fa-bed w-5 group-hover:text-amber-500"></i>
+                    <i class="fas fa-door-open w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Kelola Kamar</span>
                 </a>
 
@@ -71,10 +72,13 @@
                 </button>
 
                 <!-- Logout -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
-                    <i class="fas fa-power-off w-5"></i>
-                    <span class="mx-3 font-medium">Logout</span>
-                </a>
+                 <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                     <button type="submit" class="flex items-center px-3 py-2.5 text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+                         <i class="fas fa-power-off w-5"></i>
+                         <span class="mx-3 font-medium">Logout</span>
+                     </button>
+                 </form>
             </div>
         </div>
     </aside>

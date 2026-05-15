@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [AuthWebController::class, 'showlogin'])->name('login');
 Route::post('/login', [AuthWebController::class, 'login']);
-Route::post('logout', [AuthWebController::class, 'logout'])->name('logout');
+Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 
 Route::middleware('auth')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'dashboard']);
