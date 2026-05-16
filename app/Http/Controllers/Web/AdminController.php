@@ -35,7 +35,11 @@ class AdminController extends Controller
     }
     public function reservation()
     {
-        return view('admin.reservation');
+        $types = RoomType::all();
+
+        $rooms = Room::with('roomType')->where('status', 'tersedia')->get();
+
+        return view('admin.reservations', compact('types', 'rooms'));
     }
     public function history()
     {

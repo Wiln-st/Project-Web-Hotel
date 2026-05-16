@@ -3,11 +3,12 @@
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\EmployeeController;
+use App\Http\Controllers\Web\ReservationController;
 use App\Http\Controllers\Web\RoomController;
 use Illuminate\Support\Facades\Route;
 
 
-
+//Login & Logout
 Route::get('/', [AuthWebController::class, 'showlogin'])->name('login');
 Route::post('/login', [AuthWebController::class, 'login']);
 Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
@@ -26,7 +27,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
 });
 
 
-//Hanya bisa diakses Employee
+//Bisa diakses Employee
 Route::middleware('auth', 'role:employee')->group(function () {
     Route::get('employee/rooms', [EmployeeController::class, 'room'])->name('employee.room');
 });
@@ -34,4 +35,5 @@ Route::middleware('auth', 'role:employee')->group(function () {
 //Bisa diakses semua
 Route::middleware('auth')->group(function () {
     Route::get('rooms', [RoomController::class, 'index']);
+    Route::post('reservation', [ReservationController::class, 'store'])->name('reservation.store');
 });
