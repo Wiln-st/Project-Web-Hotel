@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>GrandStay</title>
     <!-- Tailwind CSS -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     @vite('resources/css/app.css')
@@ -39,7 +39,7 @@
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tersedia</p>
                         <span class="p-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs"><i class="fas fa-check"></i></span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">24 <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
+                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$availableRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
                 </div>
                 <!-- Penuh -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
@@ -47,7 +47,7 @@
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Penuh</p>
                         <span class="p-1.5 bg-rose-500/10 text-rose-400 rounded-lg text-xs"><i class="fas fa-door-closed"></i></span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">12 <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
+                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$fullRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
                 </div>
                 <!-- Dipesan -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
@@ -55,7 +55,7 @@
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Dipesan</p>
                         <span class="p-1.5 bg-sky-500/10 text-sky-400 rounded-lg text-xs"><i class="fas fa-bookmark"></i></span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">8 <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
+                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$bookedRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
                 </div>
                 <!-- Maintenance -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
@@ -63,20 +63,21 @@
                         <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pemeliharaan</p>
                         <span class="p-1.5 bg-amber-500/10 text-amber-400 rounded-lg text-xs"><i class="fas fa-screwdriver-wrench"></i></span>
                     </div>
-                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">3 <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
+                    <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$maintenanceRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
                 </div>
             </div>
 
             <!-- ================= GRID DATA KAMAR ================= -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                @foreach($rooms as $room)
 
                 <!-- Card Kamar 1 (Status: Terisi / Penuh) -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 rounded-2xl overflow-visible shadow-md relative group">
                     <div class="p-5">
                         <div class="flex justify-between items-start mb-3">
                             <div>
-                                <span class="text-2xl font-extrabold text-white dark:text-white light:text-slate-900">Room 101</span>
-                                <p class="text-xs text-slate-400 dark:text-slate-400 light:text-gray-500 font-medium">Deluxe King Bed</p>
+                                <span class="text-2xl font-extrabold text-white dark:text-white light:text-slate-900">Kamar {{ $room->room_number }}</span>
+                                <p class="text-xs text-slate-400 dark:text-slate-400 light:text-gray-500 font-medium">{{ $room->roomType->name }}</p>
                             </div>
 
                             <!-- Dropdown Titik Tiga -->
@@ -95,7 +96,7 @@
 
                                         <!-- SUBMENU PILIHAN STATUS (Muncul saat menu 'Set Status' di-hover) -->
                                         <div class="absolute left-full top-0 ml-1 hidden group-hover/submenu:block w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1 dark:bg-slate-850 dark:border-slate-700 light:bg-white light:border-gray-200">
-                                            <button  class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-emerald-400">
+                                            <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-emerald-400">
                                                 <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Tersedia
                                             </button>
                                             <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-rose-400">
@@ -110,20 +111,38 @@
                                         </div>
                                     </div>
                                     <button class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100"><i class="fas fa-calendar-plus w-5 text-emerald-500"></i> Booking</button>
-                                    <button id="deleteOpt1" class="flex items-center w-full px-4 py-2 text-red-400 hover:bg-red-500/10 btn-hapus-kamar"><i class="fas fa-trash-can w-5"></i> Hapus Kamar</button>
+                                    <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="flex items-center w-full px-4 py-2 text-red-400 hover:bg-red-500/10"><i class="fas fa-trash-can w-5"></i> Hapus Kamar</button>
+                                    </form>
+
                                 </div>
                             </div>
                         </div>
 
                         <div class="border-t border-slate-800/60 dark:border-slate-800/60 light:border-gray-100 pt-3 mt-4 flex justify-between items-center">
-                            <span class="text-sm font-bold text-amber-500">Rp 750,000<span class="text-xs font-normal text-slate-500">/malam</span></span>
-                            <span class="px-2.5 py-1 text-xs font-bold rounded-md bg-rose-500/10 text-rose-400">Penuh</span>
+                            <span class="text-sm font-bold text-amber-500">Rp {{ number_format($room->roomType->price, 0, ',', '.') }}<span class="text-xs font-normal text-slate-500">/malam</span></span>
+                            <span class="px-2.5 py-1 text-xs font-bold rounded-md
+                            @if($room->status == 'tersedia')
+                                bg-green-500/10 text-green-400
+
+                            @elseif($room->status == 'penuh')
+                                bg-red-500/10 text-red-400
+
+                            @elseif($room->status == 'dipesan')
+                                bg-sky-500/10 text-sky-400
+
+                            @else
+                                bg-amber-500/10 text-amber-400
+                            @endif">
+                                {{ ucfirst($room->status) }}
+                            </span>
                         </div>
                     </div>
                 </div>
 
-
-
+                @endforeach
             </div>
         </main>
     </div>
@@ -182,7 +201,8 @@
             </div>
 
             <!-- Modal Form -->
-            <form class="p-6 space-y-4">
+            <form action="{{ route('rooms.store') }}" method="POST" class="p-6 space-y-4">
+                @csrf
 
                 <!-- Input Nomor Kamar -->
                 <div>
@@ -191,9 +211,9 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
                             <i class="fas fa-door-closed"></i>
                         </span>
-                        <input type="number" id="inputNoKamar" required
+                        <input type="number" id="inputNoKamar" name="room_number" required min="1"
                             class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900"
-                            placeholder="Contoh: Room 204">
+                            placeholder="Contoh: Room 004">
                     </div>
                 </div>
 
@@ -204,12 +224,14 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
                             <i class="fas fa-layer-group"></i>
                         </span>
-                        <select id="inputTipeKamar" required
+                        <select id="inputTipeKamar" name="room_type_id" required
                             class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
                             <option value="" disabled selected>Pilih Tipe Kamar</option>
-                            <option value="Superior">Superior</option>
-                            <option value="Deluxe">Deluxe</option>
-                            <option value="Premium">Premium</option>
+                            @foreach($types as $type)
+                            <option value="{{ $type->id }}">
+                                {{ $type->name }}
+                            </option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -221,12 +243,12 @@
                         <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
                             <i class="fas fa-circle-info"></i>
                         </span>
-                        <select id="inputStatusKamar" required
+                        <select id="inputStatusKamar" name="status" required
                             class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
-                            <option value="Tersedia">Tersedia</option>
-                            <option value="Penuh">Penuh</option>
-                            <option value="Dipesan">Dipesan</option>
-                            <option value="Pemeliharaan">Pemeliharaan (Maintenance)</option>
+                            <option value="tersedia">Tersedia</option>
+                            <option value="penuh">Penuh</option>
+                            <option value="dipesan">Dipesan</option>
+                            <option value="pemeliharaan">Pemeliharaan (Maintenance)</option>
                         </select>
                     </div>
                 </div>

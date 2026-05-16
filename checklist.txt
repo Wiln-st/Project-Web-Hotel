@@ -1,0 +1,40 @@
+Admin :
+    - Dashboard
+        - UI *
+        - Saldo/Pemasukan/Pegeluaran masih hardcode
+        - Aktivitas Kamar
+
+    - Kelola kamar 
+        - UI *
+        - Tambah kamar *
+        - Hapus kamar *
+        - Info kamar masih hardcode
+
+    - Reservasi 
+        - UI 
+        - Form Reservasi
+        - Total Reservasi
+        - Simpan Reservasi 
+    
+    - Histori reservasi 
+        - UI 
+        - Tabel Reservasi
+        - Export to PDF
+        - Hapus reservasi
+        - Edit Reservasi
+
+    - Kelola Karyawan
+        - UI
+        - Tabel karyawan
+        - Tambah Karyawan
+        - Hapus karyawan
+        - Edit karyawan
+        - Status Aktif/Nonaktif karyawan
+
+    - Dark/Light mode
+        - UI 
+        - Bisa ganti tema 
+
+    - Log out
+        - UI *
+        - Bisa log out *

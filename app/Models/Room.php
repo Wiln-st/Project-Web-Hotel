@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Room extends Model
+{
+    protected $fillable = [
+        'room_number',
+        'room_type_id',
+        'status',
+    ];
+
+    // public function reservations()
+    // {
+    //     return $this->hasMany(Reservation::class);
+    // }
+
+    public function roomType()
+    {
+        return $this->belongsTo(RoomType::class);
+    }
+}
