@@ -13,6 +13,16 @@
 </head>
 
 <body>
+    @php
+
+    $active =
+    'text-amber-500 bg-slate-800/50 border-l-4 border-amber-500';
+
+    $inactive =
+    'text-slate-300 hover:bg-slate-800 hover:text-white';
+
+    @endphp
+
     <aside class="flex flex-col w-64 h-screen px-5 py-8 overflow-y-auto bg-slate-900 border-r border-slate-700 fixed">
         <!-- Brand Logo -->
         <div class="flex items-center gap-x-3 px-2">
@@ -27,37 +37,46 @@
                 <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Main Menu</p>
 
                 <!-- Dashboard -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-amber-500 bg-slate-800/50 border-l-4 border-amber-500 rounded-r-lg transition-all">
+                <a href="{{ route('dashboard') }}"
+                    class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                    {{request()->is('admin/dashboard') ? $active : $inactive}}">
                     <i class="fas fa-chart-line w-5"></i>
                     <span class="mx-3 font-medium">Dashboard</span>
                 </a>
 
                 <!-- Kelola Kamar -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group">
+                <a href="{{ route('rooms') }}" 
+                class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/rooms') ? $active : $inactive}}">
                     <i class="fas fa-door-open w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Kelola Kamar</span>
                 </a>
 
                 <!-- Reservasi -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group">
+                <a href="{{ route('reservation') }}" 
+                class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/reservation') ? $active : $inactive}}">
                     <i class="fas fa-calendar-check w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Reservasi</span>
                 </a>
 
                 <!-- Histori Pesanan -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group">
+                <a href="{{ route('history') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/history') ? $active : $inactive}}">
                     <i class="fas fa-clock-rotate-left w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Histori Pesanan</span>
                 </a>
 
                 <!-- Kelola Karyawan -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group">
+                <a href="{{ route('manageemployee') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/manageemployee') ? $active : $inactive}}">
                     <i class="fas fa-user-gear w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Kelola Karyawan</span>
                 </a>
 
                 <!-- Notifikasi -->
-                <a href="#" class="flex items-center px-3 py-2.5 text-slate-300 hover:bg-slate-800 hover:text-white rounded-lg transition-all group relative">
+                <a href="{{ route('notifikasi') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/notifikasi') ? $active : $inactive}}">
                     <i class="fas fa-bell w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Notifikasi</span>
                     <span class="absolute right-2 top-3 w-2 h-2 bg-red-500 rounded-full"></span>
@@ -72,13 +91,13 @@
                 </button>
 
                 <!-- Logout -->
-                 <form method="POST" action="{{ route('logout') }}">
+                <form method="POST" action="{{ route('logout') }}">
                     @csrf
-                     <button type="submit" class="flex items-center px-3 py-2.5 text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
-                         <i class="fas fa-power-off w-5"></i>
-                         <span class="mx-3 font-medium">Logout</span>
-                     </button>
-                 </form>
+                    <button type="submit" class="flex items-center px-3 py-2.5 text-red-400 hover:bg-red-500/10 rounded-lg transition-all">
+                        <i class="fas fa-power-off w-5"></i>
+                        <span class="mx-3 font-medium">Logout</span>
+                    </button>
+                </form>
             </div>
         </div>
     </aside>
