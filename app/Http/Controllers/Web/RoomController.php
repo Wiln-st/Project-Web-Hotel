@@ -9,7 +9,7 @@ use App\Models\Room;
 class RoomController extends Controller
 {
 
-    
+
     public function store(Request $request)
     {
         $request->validate([

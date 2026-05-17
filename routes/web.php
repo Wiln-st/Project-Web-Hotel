@@ -17,7 +17,7 @@ Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 // Hanya bisa diakses Admin
 Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('admin/rooms', [AdminController::class, 'index'])->name('rooms.index');
+    Route::get('admin/rooms', [AdminController::class, 'view'])->name('rooms.view');
     Route::post('admin/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::delete('admin/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
     Route::get('admin/reservation', [AdminController::class, 'reservation'])->name('reservation');

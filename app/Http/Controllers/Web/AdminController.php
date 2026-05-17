@@ -13,10 +13,9 @@ class AdminController extends Controller
     {
         return view('admin.dashboard');
     }
-    public function index()
+    public function view()
     {
-        $rooms = Room::with('roomType')->latest()->get();
-        $rooms = Room::orderBy('room_number', 'asc')->get();
+        $rooms = Room::with('roomType')->orderBy('room_number', 'asc')->get();
         $types = RoomType::all();
         $totalRooms = Room::count();
         $availableRooms = Room::where('status', 'tersedia')->count();

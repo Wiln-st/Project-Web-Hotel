@@ -67,6 +67,51 @@
                 </div>
             </div>
 
+            <!-- ================= BAR FILTER DATA (KATEGORI & STATUS) ================= -->
+            <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
+                <div class="flex items-center gap-2 self-start sm:self-auto">
+                    <span class="p-2 bg-slate-800 text-slate-400 dark:bg-slate-800 light:bg-gray-100 light:text-slate-500 rounded-xl text-sm">
+                        <i class="fas fa-filter"></i>
+                    </span>
+                    <p class="text-sm font-semibold text-slate-300 dark:text-slate-300 light:text-slate-700">Filter Data</p>
+                </div>
+                    <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
+                        <!-- Filter Kategori Kamar -->
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
+                                <i class="fas fa-layer-group"></i>
+                            </span>
+                            <select name="filter_kategori" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
+                                <option value="">Semua Kategori</option>
+                                <option value="Superior">Superior</option>
+                                <option value="Deluxe">Deluxe</option>
+                                <option value="Suite">Suite</option>
+                            </select>
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </div>
+
+                        <!-- Filter Status Kamar -->
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
+                                <i class="fas fa-circle-info"></i>
+                            </span>
+                            <select name="filter_status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
+                                <option value="">Semua Status</option>
+                                <option value="tersedia">Tersedia</option>
+                                <option value="penuh">Penuh</option>
+                                <option value="dipesan">Dipesan</option>
+                                <option value="pemeliharaan">Pemeliharaan</option>
+                            </select>
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
+                                <i class="fas fa-chevron-down"></i>
+                            </span>
+                        </div>
+                    </div>
+
+            </div>
+
             <!-- ================= GRID DATA KAMAR ================= -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 @foreach($rooms as $room)
@@ -77,7 +122,17 @@
                         <div class="flex justify-between items-start mb-3">
                             <div>
                                 <span class="text-2xl font-extrabold text-white dark:text-white light:text-slate-900">Kamar {{ $room->room_number }}</span>
-                                <p class="text-xs text-slate-400 dark:text-slate-400 light:text-gray-500 font-medium">{{ $room->roomType->name }}</p>
+                                <span class="px-2 py-1 text-xs font-semibold rounded-md
+                                    @if($room->roomType->name == 'Deluxe')
+                                        bg-purple-500/10 text-purple-400
+                                    @elseif($room->roomType->name == 'Superior')
+                                        bg-teal-400/10 text-teal-400
+                                    @else
+                                        bg-orange-400/10 text-orange-400
+                                    @endif
+                                    ">
+                                    {{ $room->roomType->name }}
+                                </span>
                             </div>
 
                             <!-- Dropdown Titik Tiga -->

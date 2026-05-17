@@ -45,7 +45,7 @@
                 </a>
 
                 <!-- Kelola Kamar -->
-                <a href="{{ route('rooms.index') }}" 
+                <a href="{{ route('rooms.view') }}" 
                 class="flex items-center px-3 py-2.5 rounded-lg transition-all
                 {{request()->is('admin/rooms') ? $active : $inactive}}">
                     <i class="fas fa-door-open w-5 group-hover:text-amber-500"></i>
