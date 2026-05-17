@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $fillable = [
-        'room_id',
         'customer_name',
         'phone',
         'check_in',
@@ -23,6 +22,6 @@ class Reservation extends Model
 
     public function room()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsToMany(Room::class);
     }
 }

@@ -20,7 +20,7 @@ class ReservationSeeder extends Seeder
         $reservations = [
 
             [
-                'room_id' => $rooms[0]->id,
+                'rooms' => [$rooms[0]->id],
                 'customer_name' => 'Ahmad Fauzi',
                 'phone' => '081234567890',
                 'check_in' => Carbon::now()->subDays(2),
@@ -30,7 +30,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[1]->id,
+                'rooms' => [$rooms[1]->id],
                 'customer_name' => 'Budi Santoso',
                 'phone' => '082345678901',
                 'check_in' => Carbon::now(),
@@ -40,7 +40,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[2]->id,
+                'rooms' => [$rooms[2]->id],
                 'customer_name' => 'Citra Lestari',
                 'phone' => '083456789012',
                 'check_in' => Carbon::now()->subDays(5),
@@ -50,7 +50,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[3]->id,
+                'rooms' => [$rooms[3]->id],
                 'customer_name' => 'Dewi Anggraini',
                 'phone' => '084567890123',
                 'check_in' => Carbon::now()->addDay(),
@@ -60,7 +60,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[4]->id,
+                'rooms' => [$rooms[4]->id],
                 'customer_name' => 'Eko Prasetyo',
                 'phone' => '085678901234',
                 'check_in' => Carbon::now(),
@@ -70,7 +70,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[5]->id,
+                'rooms' => [$rooms[5]->id],
                 'customer_name' => 'Fitri Amelia',
                 'phone' => '086789012345',
                 'check_in' => Carbon::now()->subDays(1),
@@ -80,7 +80,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[6]->id,
+                'rooms' => [$rooms[6]->id],
                 'customer_name' => 'Galang Saputra',
                 'phone' => '087890123456',
                 'check_in' => Carbon::now()->subDays(3),
@@ -90,7 +90,7 @@ class ReservationSeeder extends Seeder
             ],
 
             [
-                'room_id' => $rooms[7]->id,
+                'rooms' => [$rooms[7]->id],
                 'customer_name' => 'Hana Putri',
                 'phone' => '088901234567',
                 'check_in' => Carbon::now()->addDays(2),
@@ -99,13 +99,37 @@ class ReservationSeeder extends Seeder
                 'facilities' => ['makan', 'parkir'],
             ],
 
+            // Contoh multi room booking
+            [
+                'rooms' => [$rooms[0]->id, $rooms[1]->id],
+                'customer_name' => 'PT Global Meeting',
+                'phone' => '089912345678',
+                'check_in' => Carbon::now()->addDays(1),
+                'check_out' => Carbon::now()->addDays(3),
+                'total_price' => 4500000,
+                'facilities' => ['wifi', 'makan', 'parkir'],
+            ],
+
         ];
 
-        foreach ($reservations as $reservation) {
+        foreach ($reservations as $data) {
 
-            Reservation::create($reservation);
+            // Simpan reservation
+            $reservation = Reservation::create([
+                'customer_name' => $data['customer_name'],
+                'phone' => $data['phone'],
+                'check_in' => $data['check_in'],
+                'check_out' => $data['check_out'],
+                'total_price' => $data['total_price'],
+                'facilities' => $data['facilities'],
+                'status' => 'booking',
+            ]);
 
-            Room::find($reservation['room_id'])->update([
+            // Simpan relasi ke pivot table
+            $reservation->room()->attach($data['rooms']);
+
+            // Update status room
+            Room::whereIn('id', $data['rooms'])->update([
                 'status' => 'penuh'
             ]);
         }

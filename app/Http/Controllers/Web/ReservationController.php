@@ -13,11 +13,11 @@ class ReservationController extends Controller
 {
     public function reservation()
     {
-        $types = RoomType::all();
+        $roomTypes = RoomType::with('rooms')->get();
 
         $rooms = Room::with('roomType')->where('status', 'tersedia')->get();
 
-        return view('admin.reservations', compact('types', 'rooms'));
+        return view('admin.reservations', compact('roomTypes', 'rooms'));
     }
 
     public function store(Request $request)

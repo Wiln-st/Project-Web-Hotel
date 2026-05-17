@@ -112,7 +112,13 @@
                                     @endif ">{{ $reservation->room->roomType->name }}</span>
                                 </td>
 
-                                <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">Kamar {{ $reservation->room->room_number }}</td>
+                                <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">
+                                    Kamar @foreach($reservation->rooms as $room)
+                                          <span class="px-2 py-1 bg-slate-800 rounded">
+                                              {{ $room->room_number }}
+                                          </span>
+                                          @endforeach
+                                </td>
 
                                 <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">{{ \Carbon\Carbon::parse($reservation->check_in)->format('d/M/Y') }}</td>
 
