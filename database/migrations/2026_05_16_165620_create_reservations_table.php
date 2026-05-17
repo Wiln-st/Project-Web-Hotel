@@ -18,6 +18,7 @@ return new class extends Migration
                 ->constrained('rooms')
                 ->onDelete('cascade');
 
+
             $table->string('customer_name');
             $table->string('phone');
 

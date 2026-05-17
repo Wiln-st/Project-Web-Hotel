@@ -24,11 +24,10 @@ class AuthWebController extends Controller
             $request->session()->regenerate();
 
             if (Auth::user()->role === 'admin') {
-                return redirect()->intended('admin/dashboard');
+                return redirect('admin/dashboard');
 
             } elseif (Auth::user()->role === 'employee') {
-                return redirect()->intended('employee/room');
-                
+                return redirect('employee/rooms');
             }
         }
 
