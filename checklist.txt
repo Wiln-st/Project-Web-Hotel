@@ -12,9 +12,9 @@ Admin :
 
     - Reservasi 
         - UI *
-        - Form Reservasi
-        - Total Reservasi
-        - Simpan Reservasi 
+        - Form Reservasi *
+        - Total Reservasi *
+        - Simpan Reservasi *
     
     - Histori reservasi 
         - UI 
@@ -38,3 +38,8 @@ Admin :
     - Log out
         - UI *
         - Bisa log out *
+
+
+    = Fitur Lain
+        - saat masuk hari check in status otomatis kamar ganti menjadi penuh
+        - bisa pilih lebih dari 1 kamar pada reservasi

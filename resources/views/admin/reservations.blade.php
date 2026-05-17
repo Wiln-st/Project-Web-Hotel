@@ -28,7 +28,7 @@
 
                 <!-- Kiri: Input Form (Mengambil 2 Kolom) -->
                 <form id="formReservasi"
-                    action="{{ route('reservation.store') }}" methud="POST"
+                    action="{{ route('reservation.store') }}" method="POST"
                     onsubmit="submitForm(event)" class="lg:col-span-2 space-y-6 bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-6 rounded-2xl shadow-sm">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -56,7 +56,7 @@
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fas fa-layer-group"></i></span>
                                 <select id="kategoriKamar" onchange="updateKamarDanHarga()" required class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
-                                    <option value="">Pilih Kategori Kamar</option>
+                                    <option value="" disabled selected>Pilih Kategori Kamar</option>
                                     @foreach($types as $type)
                                     <option value="{{ $type->id }}">
                                         {{ $type->name }}
@@ -73,7 +73,7 @@
                             <div class="relative">
                                 <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500"><i class="fas fa-door-open"></i></span>
                                 <select id="noKamar" name="room_id" required class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
-                                    <option value="">Pilih Kamar</option>
+                                    <option value="" disabled selected>Pilih Kamar</option>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}" data-type="{{ $room->room_type_id }}">
                                         Kamar {{ $room->room_number }}
@@ -108,7 +108,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Makanan/Minuman -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" id="facMakan" value="75000" onchange="hitungTotal()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facMakan" value="makan" onchange="hitungTotal()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Makanan & Minuman</p>
                                     <p class="text-xs text-slate-400 mt-0.5">+Rp 75.000</p>
@@ -116,15 +116,15 @@
                             </label>
                             <!-- Parkir Eksklusif -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" id="facParkir" value="25000" onchange="hitungTotal()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facParkir" value="parkir" onchange="hitungTotal()" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Parkir Eksklusif</p>
-                                    <p class="text-xs text-slate-400 mt-0.5">+Rp 25.000</p>
+                                    <p class="text-xs text-slate-400 mt-0.5">+Rp 10.000</p>
                                 </div>
                             </label>
                             <!-- Free High-Speed Wifi -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" id="facWifi" value="0" onchange="hitungTotal()" checked class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facWifi" value="wifi" onchange="hitungTotal()" checked class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Free High-Speed Wi-Fi</p>
                                     <p class="text-xs text-emerald-400 mt-0.5">Gratis</p>
@@ -141,7 +141,7 @@
                     <div class="space-y-3 text-sm">
                         <div class="flex justify-between">
                             <span class="text-slate-400">Harga Dasar Kamar</span>
-                            <span id="lblHargaDasar" class="font-semibold text-white dark:text-white light:text-slate-800">Rp 450.000</span>
+                            <span id="lblHargaDasar" class="font-semibold text-white dark:text-white light:text-slate-800">Rp 0</span>
                         </div>
                         <div class="flex justify-between">
                             <span class="text-slate-400">Durasi Menginap</span>
@@ -167,73 +167,117 @@
         </main>
     </div>
 
+
     <!-- ================= JAVASCRIPT SYSTEM ================= -->
     <script>
-        // Data nomor kamar tiruan berdasarkan kategori
-        // const dataKamar = {
-        //     Superior: ["Room 101", "Room 102", "Room 105"],
-        //     Deluxe: ["Room 201", "Room 202", "Room 203"],
-        //     Suite: ["Room 301", "Room 302"]
-        // };
 
-        // 1. Fungsi Mengubah Dropdown Nomor Kamar Otomatis
+        const roomSelect = document.getElementById('noKamar');
+        const kategoriSelect = document.getElementById('kategoriKamar');
+
+
+        //Filter kamar berdasarkan kategori yang dipilih
         function updateKamarDanHarga() {
-            let kategori = document.getElementById('kategoriKamar').value;
+            let kategori = kategoriSelect.value;
 
-            let kamarSelect = document.getElementById('noKamar');
-
-            let options = kamarSelect.querySelectorAll('option');
+            let options = roomSelect.querySelectorAll('option');
 
             options.forEach(option => {
-                if(option.dataset.type === kategori) {
+                if (!option.value) return;
+
+                if (option.dataset.type == kategori) {
                     option.hidden = false;
                 } else {
                     option.hidden = true;
                 }
             });
+
+            hitungTotal();
         }
 
-        window.onload = updateKamarDanHarga; 
 
-        // 2. Fungsi Hitung Otomatis (Live Calculation)
-        // function hitungTotal() {
-        //     const selectKategori = document.getElementById('kategoriKamar');
-        //     const hargaPerMalam = parseInt(selectKategori.options[selectKategori.selectedIndex].getAttribute('data-harga'));
+        //Hitung durasi (checkout - checkin)
+        function hitungDurasi() {
+            let checkIn = document.getElementById('tglCheckIn').value;
+            let checkOut = document.getElementById('tglCheckOut').value;
 
-        //     const tglIn = new Date(document.getElementById('tglCheckIn').value);
-        //     const tglOut = new Date(document.getElementById('tglCheckOut').value);
+            if (!checkIn || !checkOut) return 0;
 
-        //     let durasiMalam = 0;
-        //     // Menghitung selisih hari jika tanggal check-in dan out valid
-        //     if (!isNaN(tglIn) && !isNaN(tglOut) && tglOut > tglIn) {
-        //         const selisihWaktu = tglOut.getTime() - tglIn.getTime();
-        //         durasiMalam = Math.ceil(selisihWaktu / (1000 * 3600 * 24));
-        //     }
+            let start = new Date(checkIn);
+            let end = new Date(checkOut);
 
-        //     // Menghitung Biaya Fasilitas Tambahan
-        //     let biayaFasilitasPerHari = 0;
-        //     if (document.getElementById('facMakan').checked) biayaFasilitasPerHari += parseInt(document.getElementById('facMakan').value);
-        //     if (document.getElementById('facParkir').checked) biayaFasilitasPerHari += parseInt(document.getElementById('facParkir').value);
+            let diff = (end - start) / (1000 * 60 * 60 * 24); // Menghitung selisih dalam hari
 
-        //     let totalFasilitas = biayaFasilitasPerHari * durasiMalam;
-        //     let totalSemuaHarga = (hargaPerMalam * durasiMalam) + totalFasilitas;
+            return diff > 0 ? diff : 1;
+        }
 
-        //     // Render/Tulis Hasil ke Sisi Ringkasan (Kanan)
-        //     document.getElementById('lblHargaDasar').innerText = "Rp " + hargaPerMalam.toLocaleString('id-ID');
-        //     document.getElementById('lblDurasi').innerText = durasiMalam + " Malam";
-        //     document.getElementById('lblFasilitas').innerText = "Rp " + totalFasilitas.toLocaleString('id-ID');
-        //     document.getElementById('lblTotalHarga').innerText = "Rp " + totalSemuaHarga.toLocaleString('id-ID');
-        // }
 
-        // function submitForm(e) {
-        //     e.preventDefault();
-        //     alert("Reservasi Berhasil Disimpan ke Sistem!");
-        //     e.target.reset();
-        //     updateKamarDanHarga();
-        // }
+        //Ambil harga kamar terpilih
+        function getHargaKamar() {
+            let selectedOption = kategoriSelect.options[kategoriSelect.selectedIndex];
 
-        // Jalankan pengisian nomor kamar saat pertama kali halaman dibuka
-        updateKamarDanHarga();
+            if (!selectedOption) return 0;
+
+            let text = selectedOption.text;
+            let match = text.match(/\d[\d\.]*/g);
+
+            return parseInt(match[0].replace(/\./g, ''));
+        }
+
+
+        //Hitung total fasilitas
+        function hitungFasilitas() {
+            let total = 0;
+
+            const hargaFasilitas = {
+                'makan': 75000,
+                'parkir': 10000,
+                'wifi': 0
+            };
+
+            if (document.getElementById('facMakan').checked) {
+                total += hargaFasilitas['makan'];
+            }
+            if (document.getElementById('facParkir').checked) {
+                total += hargaFasilitas['parkir'];
+            }
+            if (document.getElementById('facWifi').checked) {
+                total += hargaFasilitas['wifi'];
+            }
+
+            return total;
+        }
+
+
+        //Hitung total keseluruhan
+        function hitungTotal(){
+            let hargaKamar = getHargaKamar();
+            let durasi = hitungDurasi();
+            let fasilitas = hitungFasilitas();
+
+            let total = (hargaKamar * durasi) + (fasilitas *durasi);
+
+            //Update UI
+            document.getElementById('lblHargaDasar').innerText = 
+                `Rp ` + hargaKamar.toLocaleString('id-ID');
+            document.getElementById('lblDurasi').innerText = 
+                durasi + ` Malam`;
+            document.getElementById('lblFasilitas').innerText = 
+                `Rp ` + (fasilitas * durasi).toLocaleString('id-ID');
+            document.getElementById('lblTotalHarga').innerText = 
+                `Rp ` + total.toLocaleString('id-ID');
+        }
+
+        //Auto trigger event
+        document.getElementById('tglCheckIn').addEventListener('change', hitungTotal);
+        document.getElementById('tglCheckOut').addEventListener('change', hitungTotal);
+        document.getElementById('kategoriKamar').addEventListener('change', hitungTotal);
+
+
+        //Init saat page load
+        window.onload = function() {
+            updateKamarDanHarga();
+            hitungTotal();
+        }
     </script>
 </body>
 

@@ -82,8 +82,8 @@
 
                             <!-- Dropdown Titik Tiga -->
                             <div class="relative">
-                                <button onclick="toggleActionMenu('menu1')" class="text-slate-400 hover:text-white light:hover:text-slate-900 p-1"><i class="fas fa-ellipsis-v"></i></button>
-                                <div id="menu1" class="hidden absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-30 py-1 text-sm text-slate-200 dark:bg-slate-800 dark:border-slate-700 light:bg-white light:border-gray-200 light:text-slate-700">
+                                <button onclick="toggleActionMenu('menu{{ $room->id }}')" class="text-slate-400 hover:text-white light:hover:text-slate-900 p-1"><i class="fas fa-ellipsis-v"></i></button>
+                                <div id="menu{{ $room->id }}" class="hidden absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-30 py-1 text-sm text-slate-200 dark:bg-slate-800 dark:border-slate-700 light:bg-white light:border-gray-200 light:text-slate-700">
                                     <button onclick="openModal('infoModal')" class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100"><i class="fas fa-info-circle w-5 text-amber-500"></i> Info Kamar</button>
                                     <!-- Set Status (Dengan Submenu / Hover Group) -->
                                     <div class="relative group/submenu">
