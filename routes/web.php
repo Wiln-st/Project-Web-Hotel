@@ -17,13 +17,13 @@ Route::post('/logout', [AuthWebController::class, 'logout'])->name('logout');
 // Hanya bisa diakses Admin
 Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('admin/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
-    Route::get('admin/rooms', [AdminController::class, 'view'])->name('rooms.view');
+    Route::get('admin/rooms', [RoomController::class, 'rooms'])->name('rooms.view');
     Route::post('admin/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::delete('admin/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
-    Route::get('admin/reservation', [AdminController::class, 'reservation'])->name('reservation');
-    Route::get('admin/history', [AdminController::class, 'history'])->name('history');
-    Route::get('admin/manageemployee', [AdminController::class, 'manageemployee'])->name('manageemployee');
+    Route::get('admin/reservation', [ReservationController::class, 'reservation'])->name('reservation');
+    Route::get('admin/history', [ReservationController::class, 'history'])->name('reservation.history');
     Route::get('admin/notifikasi', [AdminController::class, 'notifikasi'])->name('notifikasi');
+    Route::get('admin/manageemployee', [AdminController::class, 'manageemployee'])->name('manageemployee');
 });
 
 
@@ -34,6 +34,8 @@ Route::middleware('auth', 'role:employee')->group(function () {
 
 //Bisa diakses semua
 Route::middleware('auth')->group(function () {
-    Route::get('rooms', [RoomController::class, 'index']);
-    Route::post('reservation', [ReservationController::class, 'store'])->name('reservation.store');
+    Route::get('/rooms', [RoomController::class, 'index']);
+    Route::get('/history', [ReservationController::class, 'history'])->name('history.index');
+    Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
+    Route::delete('/reservation/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy'); 
 });

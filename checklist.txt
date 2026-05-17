@@ -17,11 +17,11 @@ Admin :
         - Simpan Reservasi *
     
     - Histori reservasi 
-        - UI 
-        - Tabel Reservasi
+        - UI *
+        - Tabel Reservasi *
         - Export to PDF
-        - Hapus reservasi
-        - Edit Reservasi
+        - Hapus reservasi *
+        - Edit Reservasi 
 
     - Kelola Karyawan
         - UI
@@ -45,3 +45,4 @@ Admin :
         - bisa pilih lebih dari 1 kamar pada reservasi
         - filter kategori kamar di bagian kelola kamar
         - tingkat lantai 
+        - Date Realtime

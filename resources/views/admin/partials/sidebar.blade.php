@@ -61,7 +61,7 @@
                 </a>
 
                 <!-- Histori Pesanan -->
-                <a href="{{ route('history') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                <a href="{{ route('reservation.history') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
                 {{request()->is('admin/history') ? $active : $inactive}}">
                     <i class="fas fa-clock-rotate-left w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Histori Pesanan</span>

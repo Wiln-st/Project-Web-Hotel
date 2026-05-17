@@ -128,7 +128,7 @@
                                     @elseif($room->roomType->name == 'Superior')
                                         bg-teal-400/10 text-teal-400
                                     @else
-                                        bg-orange-400/10 text-orange-400
+                                        bg-yellow-400/10 text-yellow-400
                                     @endif
                                     ">
                                     {{ $room->roomType->name }}
