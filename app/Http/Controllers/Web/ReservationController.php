@@ -13,7 +13,9 @@ class ReservationController extends Controller
 {
     public function reservation()
     {
-        $roomTypes = RoomType::with('rooms')->get();
+        $roomTypes = RoomType::with(['rooms' => function ($query) {
+            $query->where('status', 'tersedia');
+        }])->get();
 
         $rooms = Room::with('roomType')->where('status', 'tersedia')->get();
 
@@ -30,47 +32,6 @@ class ReservationController extends Controller
             'check_out' => 'required|date|after_or_equal:check_in',
         ]);
 
-        // VALIDASI BENTROK
-        foreach ($request->room_ids as $roomId) {
-
-            $bentrok = Reservation::whereHas('rooms', function ($query) use ($roomId) {
-
-                $query->where('rooms.id', $roomId);
-            })
-
-                ->where(function ($query) use ($request) {
-
-                    $query->whereBetween('check_in', [
-                        $request->check_in,
-                        $request->check_out
-                    ])
-
-                        ->orWhereBetween('check_out', [
-                            $request->check_in,
-                            $request->check_out
-                        ])
-
-                        ->orWhere(function ($q) use ($request) {
-
-                            $q->where('check_in', '<=', $request->check_in)
-                                ->where('check_out', '>=', $request->check_out);
-                        });
-                })
-
-                ->exists();
-
-            if ($bentrok) {
-
-                $room = Room::find($roomId);
-
-                return back()->with(
-                    'error',
-                    "Kamar {$room->room_number} telah dibooking pada " .
-                        Carbon::parse($request->check_in)->format('d/m/Y') . " - " .
-                        Carbon::parse($request->check_out)->format('d/m/Y')
-                );
-            }
-        }
 
         // HITUNG TOTAL
         $days = Carbon::parse($request->check_in)
@@ -119,7 +80,7 @@ class ReservationController extends Controller
             'check_out' => $request->check_out,
             'total_price' => $totalPrice,
             'facilities' => $facilities,
-            'status' => 'booking',
+            'status' => 'dipesan'
         ]);
 
         // SIMPAN KE PIVOT
@@ -191,7 +152,9 @@ class ReservationController extends Controller
     public function edit($id)
     {
         $reservation = Reservation::with('rooms')->findOrFail($id);
-        $roomTypes = RoomType::with('rooms')->get();
+        $roomTypes = RoomType::with(['rooms' => function ($query) {
+            $query->where('status', 'tersedia');
+        }])->get();
 
         return view('admin.reservations_edit', compact('reservation', 'roomTypes'));
     }
@@ -207,51 +170,6 @@ class ReservationController extends Controller
             'check_in' => 'required|date',
             'check_out' => 'required|date|after_or_equal:check_in',
         ]);
-
-        // VALIDASI BENTROK
-        foreach ($request->room_ids as $roomId) {
-
-            $bentrok = Reservation::where('id', '!=', $reservation->id)
-
-                ->whereHas('rooms', function ($query) use ($roomId) {
-
-                    $query->where('rooms.id', $roomId);
-                })
-
-                ->where(function ($query) use ($request) {
-
-                    $query->whereBetween('check_in', [
-                        $request->check_in,
-                        $request->check_out
-                    ])
-
-                        ->orWhereBetween('check_out', [
-                            $request->check_in,
-                            $request->check_out
-                        ])
-
-                        ->orWhere(function ($q) use ($request) {
-
-                            $q->where('check_in', '<=', $request->check_in)
-                                ->where('check_out', '>=', $request->check_out);
-                        });
-                })
-
-                ->exists();
-
-            if ($bentrok) {
-
-                $room = Room::find($roomId);
-
-                return back()->with(
-                    'error',
-                    "Kamar {$room->room_number} telah dibooking pada " .
-                        Carbon::parse($request->check_in)->format('d/m/Y') .
-                        " - " .
-                        Carbon::parse($request->check_out)->format('d/m/Y')
-                );
-            }
-        }
 
         // HITUNG HARI
         $days = Carbon::parse($request->check_in)

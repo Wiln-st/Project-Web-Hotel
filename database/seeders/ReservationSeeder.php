@@ -84,50 +84,6 @@ class ReservationSeeder extends Seeder
                 'facilities' => ['parkir'],
             ],
 
-            // ROOM 6
-            [
-                'rooms' => [$rooms[5]->id],
-                'customer_name' => 'Fitri Amelia',
-                'phone' => '086789012345',
-                'check_in' => Carbon::now()->addDays(15),
-                'check_out' => Carbon::now()->addDays(17),
-                'total_price' => 2400000,
-                'facilities' => ['makan'],
-            ],
-
-            // ROOM 7
-            [
-                'rooms' => [$rooms[6]->id],
-                'customer_name' => 'Galang Saputra',
-                'phone' => '087890123456',
-                'check_in' => Carbon::now()->addDays(18),
-                'check_out' => Carbon::now()->addDays(20),
-                'total_price' => 1500000,
-                'facilities' => ['wifi'],
-            ],
-
-            // ROOM 8
-            [
-                'rooms' => [$rooms[7]->id],
-                'customer_name' => 'Hana Putri',
-                'phone' => '088901234567',
-                'check_in' => Carbon::now()->addDays(21),
-                'check_out' => Carbon::now()->addDays(23),
-                'total_price' => 3300000,
-                'facilities' => ['makan', 'parkir'],
-            ],
-
-            // MULTI ROOM (ROOM 1 & 2)
-            [
-                'rooms' => [$rooms[0]->id, $rooms[1]->id],
-                'customer_name' => 'PT Global Meeting',
-                'phone' => '089912345678',
-                'check_in' => Carbon::now()->addDays(24),
-                'check_out' => Carbon::now()->addDays(26),
-                'total_price' => 4500000,
-                'facilities' => ['wifi', 'makan', 'parkir'],
-            ],
-
         ];
 
         foreach ($reservations as $data) {
@@ -140,6 +96,7 @@ class ReservationSeeder extends Seeder
                 'check_out' => $data['check_out'],
                 'total_price' => $data['total_price'],
                 'facilities' => $data['facilities'],
+                'status' => 'dipesan'
             ]);
 
             // Simpan pivot

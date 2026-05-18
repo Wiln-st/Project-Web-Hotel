@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800 ">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
     @include('admin.partials.sidebar')
-    <div class="flex min-h-screen ">
+    <div class="flex min-h-screen">
         <!-- ================= MAIN CONTENT ================= -->
-        <main class="flex-1 ml-64 p-8 lg:p-10 overflow-y-auto  ">
+        <main class="flex-1 ml-64 p-8 lg:p-10 overflow-y-auto">
 
             <!-- Header & Role Selector (Untuk Simulasi Demo Admin vs Employee) -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
@@ -107,21 +107,21 @@
                         </div>
 
                         <!-- FILTER STATUS -->
-                        <div class="relative">
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
-                                <i class="fas fa-circle-info"></i>
-                            </span>
+                        <div class="relative"> 
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs"> 
+                                <i class="fas fa-circle-info"></i> 
+                            </span> 
                             <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
                                 <option value="" disabled selected>Semua Status</option>
                                 <option value="tersedia" {{ request('status') == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
                                 <option value="penuh" {{ request('status') == 'penuh' ? 'selected' : '' }}>Penuh</option>
                                 <option value="dipesan" {{ request('status') == 'dipesan' ? 'selected' : '' }}>Dipesan</option>
                                 <option value="pemeliharaan" {{ request('status') == 'pemeliharaan' ? 'selected' : '' }}>Pemeliharaan</option>
-                            </select>
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
-                                <i class="fas fa-chevron-down"></i>
+                            </select> 
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500"> 
+                                <i class="fas fa-chevron-down"></i> 
                             </span>
-                        </div>
+                         </div>
 
                     </div>
 

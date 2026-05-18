@@ -20,6 +20,7 @@ Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('admin/rooms', [RoomController::class, 'rooms'])->name('rooms.view');
     Route::post('admin/rooms', [RoomController::class, 'store'])->name('rooms.store');
     Route::delete('admin/rooms/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
+    Route::post('admin/rooms/refresh-status', [RoomController::class, 'refreshStatus'])->name('rooms.refreshStatus');
     Route::get('admin/reservation', [ReservationController::class, 'reservation'])->name('reservation');
     Route::get('admin/history', [ReservationController::class, 'history'])->name('reservation.history');
     Route::get('admin/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');

@@ -24,6 +24,13 @@ return new class extends Migration
 
             $table->json('facilities')->nullable();
 
+            $table->enum('status', [
+                'dipesan',
+                'check_in',
+                'check_out',
+                'dibatalkan'
+            ])->default('dipesan');
+
             $table->timestamps();
         });
     }

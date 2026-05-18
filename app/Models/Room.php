@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Reservation;
+use App\Models\RoomType;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Room extends Model

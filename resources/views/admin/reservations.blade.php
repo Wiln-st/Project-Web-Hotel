@@ -21,7 +21,7 @@
                 <p class="text-sm text-slate-400 dark:text-slate-400 light:text-gray-500 mt-1">Input data reservasi tamu baru secara manual dengan sistem kalkulasi biaya otomatis.</p>
             </div>
 
-            <!-- Alert Box Error (Dipindah ke luar Grid agar full width dan rapi) -->
+            <!-- Alert Box Error (Dipindah ke luar Grid agar full width dan rapi)
             @if(session('error'))
             <div id="alertError" class="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center justify-between backdrop-blur-sm">
                 <div class="flex items-center gap-3">
@@ -32,7 +32,7 @@
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            @endif
+            @endif -->
 
             <!-- Grid Layout Form & Ringkasan Biaya -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">

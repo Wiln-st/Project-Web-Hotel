@@ -46,3 +46,4 @@ Admin :
         - filter kategori kamar di bagian kelola kamar *
         - tingkat lantai 
         - Date Realtime *
+        - kamar terhapus saat kamar tersebut dipesan
