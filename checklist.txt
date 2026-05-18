@@ -42,7 +42,7 @@ Admin :
 
     = Fitur Lain
         - saat masuk hari check in status otomatis kamar ganti menjadi penuh
-        - bisa pilih lebih dari 1 kamar pada reservasi
-        - filter kategori kamar di bagian kelola kamar
+        - bisa pilih lebih dari 1 kamar pada reservasi *
+        - filter kategori kamar di bagian kelola kamar *
         - tingkat lantai 
-        - Date Realtime
+        - Date Realtime 

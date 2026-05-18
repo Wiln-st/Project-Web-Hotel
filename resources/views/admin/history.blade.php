@@ -102,22 +102,29 @@
                                 <td class="py-3.5 px-4 font-mono text-slate-400 light:text-slate-600">{{ $reservation->phone }}</td>
 
                                 <td class="py-3 px-4">
-                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold                                     
-                                    @if($reservation->room->roomType->name == 'Deluxe')
-                                        bg-purple-500/10 text-purple-400
-                                    @elseif($reservation->room->roomType->name == 'Superior')
-                                        bg-teal-400/10 text-teal-400
-                                    @else
-                                        bg-yellow-400/10 text-yellow-400
-                                    @endif ">{{ $reservation->room->roomType->name }}</span>
+                                    @foreach($reservation->rooms as $room)
+
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-semibold
+
+                                        @if($room->roomType->name == 'Deluxe')
+                                            bg-purple-500/10 text-purple-400
+
+                                        @elseif($room->roomType->name == 'Superior')
+                                            bg-teal-400/10 text-teal-400
+
+                                        @else
+                                            bg-yellow-400/10 text-yellow-400
+                                        @endif">
+
+                                        {{ $room->roomType->name }}
+
+                                    </span>
+
+                                    @endforeach
                                 </td>
 
                                 <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">
-                                    Kamar @foreach($reservation->rooms as $room)
-                                          <span class="px-2 py-1 bg-slate-800 rounded">
-                                              {{ $room->room_number }}
-                                          </span>
-                                          @endforeach
+                                    Kamar {{ $reservation->rooms->pluck('room_number')->implode(', ') }}
                                 </td>
 
                                 <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">{{ \Carbon\Carbon::parse($reservation->check_in)->format('d/M/Y') }}</td>

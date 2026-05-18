@@ -29,7 +29,7 @@
                 <!-- Date Filter Badge -->
                 <div class="flex items-center gap-3 bg-slate-900 dark:bg-slate-900 light:bg-white border border-slate-800 dark:border-slate-800 light:border-gray-200 px-4 py-2 rounded-xl text-sm shadow-sm w-fit">
                     <i class="fas fa-calendar text-amber-500"></i>
-                    <span class="font-medium text-slate-300 dark:text-slate-300 light:text-slate-700">16 Mei 2026</span>
+                    <span class="font-medium text-slate-300 dark:text-slate-300 light:text-slate-700">{{ $today->translatedFormat('d F Y') }}</span>
                 </div>
             </div>
 

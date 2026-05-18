@@ -21,6 +21,19 @@
                 <p class="text-sm text-slate-400 dark:text-slate-400 light:text-gray-500 mt-1">Input data reservasi tamu baru secara manual dengan sistem kalkulasi biaya otomatis.</p>
             </div>
 
+            <!-- Alert Box Error (Dipindah ke luar Grid agar full width dan rapi) -->
+            @if(session('error'))
+            <div id="alertError" class="mb-6 p-4 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 text-sm flex items-center justify-between backdrop-blur-sm">
+                <div class="flex items-center gap-3">
+                    <i class="fas fa-exclamation-circle text-lg text-red-500"></i>
+                    <span>{{ session('error') }}</span>
+                </div>
+                <button type="button" onclick="document.getElementById('alertError').remove()" class="text-slate-400 hover:text-white transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            @endif
+
             <!-- Grid Layout Form & Ringkasan Biaya -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -49,11 +62,17 @@
                         <!-- Loop Pemilihan Kamar Berdasarkan Kategori -->
                         @foreach($roomTypes as $type)
                         <div class="md:col-span-1">
-                            <label class="block text-xs font-semibold text-slate-400 mb-2 uppercase tracking-wider">
-                                Kamar {{ $type->name }} (Rp {{ number_format($type->price, 0, ',', '.') }}/Malam) <span class="text-[10px] text-amber-500 font-normal lowercase"><br>(Ctrl / Cmd + klik untuk pilih > 1)</span>
-                            </label>
+                            <div class="flex justify-between items-center mb-2">
+                                <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider">
+                                    Kamar {{ $type->name }} <span class="text-[10px] text-slate-500 font-normal block md:inline md:ml-1">(Rp {{ number_format($type->price, 0, ',', '.') }}/malam)</span>
+                                </label>
+                            <div class="text-[11px] text-amber-500 font-medium flex items-center cursor-default">
+                                    <i class="fas fa-door-open mr-1"></i>
+                                    {{ $type->rooms->count() }} Kamar Tersedia
+                                </div>
+                            </div>
                             <div class="relative">
-                                <select name="room_ids[]" multiple size="4" class="room-selector w-full p-2 bg-slate-800 border border-slate-700 text-white text-sm rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 overflow-y-auto scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                                <select name="room_ids[]" multiple size="3" class="room-selector w-full p-2 bg-slate-800 border border-slate-700 text-white text-sm rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 overflow-y-auto scrollbar-none [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
                                     @foreach($type->rooms as $room)
                                     <option value="{{ $room->id }}" data-price="{{ $type->price }}" class="py-1 px-2 checked:bg-amber-500 checked:text-slate-900 cursor-pointer rounded mb-0.5">
                                         Kamar {{ $room->room_number }}
@@ -64,7 +83,12 @@
                         </div>
                         @endforeach
 
-<br>
+                        <!-- Tombol Reset Semua Kamar sekaligus jika kategori berjumlah ganjil / genap tetap presisi -->
+                        <div class="md:col-span-1 flex justify-end items-end">
+                            <button type="button" onclick="resetAllSelect()" class=" w-full justify-center text-xs bg-slate-800 hover:bg-slate-750 text-slate-300 px-4 py-2 rounded-xl border border-slate-700 transition flex items-center gap-2 cursor-pointer">
+                                <i class="fas fa-arrow-rotate-left"></i> Reset Semua Pilihan Kamar
+                            </button>
+                        </div>
 
                         <!-- Tgl Check-In -->
                         <div>
@@ -152,6 +176,25 @@
 
     <!-- ================= JAVASCRIPT SYSTEM ================= -->
     <script>
+        // Fungsi untuk mereset pilihan satu multiselect tertentu
+        function resetSingleSelect(buttonElement) {
+            // Cari element select terdekat yang berada dalam satu wrapper dengan button
+            const select = buttonElement.closest('.md:col-span-1').querySelector('.room-selector');
+            if (select) {
+                select.selectedIndex = -1; // Membatalkan seluruh blok pilihan select
+                hitungTotal(); // Trigger kalkulasi ulang harga live
+            }
+        }
+
+        // Fungsi untuk mereset seluruh multiselect kamar sekaligus
+        function resetAllSelect() {
+            const selectors = document.querySelectorAll('.room-selector');
+            selectors.forEach(select => {
+                select.selectedIndex = -1;
+            });
+            hitungTotal();
+        }
+
         // Hitung durasi (checkout - checkin)
         function hitungDurasi() {
             const checkIn = document.getElementById('tglCheckIn').value;

@@ -126,7 +126,7 @@ class ReservationSeeder extends Seeder
             ]);
 
             // Simpan relasi ke pivot table
-            $reservation->room()->attach($data['rooms']);
+            $reservation->rooms()->attach($data['rooms']);
 
             // Update status room
             Room::whereIn('id', $data['rooms'])->update([
