@@ -9,9 +9,21 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    public function rooms()
+    public function rooms(Request $request)
     {
-        $rooms = Room::with('roomType')->orderBy('room_number', 'asc')->get();
+        $query = Room::with('roomType');
+
+        if ($request->kategori) {
+            $query->whereHas('roomType', function ($q) use ($request) {
+                $q->where('name', $request->kategori);
+            });
+        }
+
+        if ($request->status) {
+            $query->where('status', $request->status);
+        }
+
+        $rooms = $query->orderBy('room_number', 'asc')->get();
         $types = RoomType::all();
         $totalRooms = Room::count();
         $availableRooms = Room::where('status', 'tersedia')->count();

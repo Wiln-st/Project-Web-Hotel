@@ -12,11 +12,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
-<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
+<body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800 ">
     @include('admin.partials.sidebar')
-    <div class="flex min-h-screen">
+    <div class="flex min-h-screen ">
         <!-- ================= MAIN CONTENT ================= -->
-        <main class="flex-1 ml-64 p-8 lg:p-10 overflow-y-auto">
+        <main class="flex-1 ml-64 p-8 lg:p-10 overflow-y-auto  ">
 
             <!-- Header & Role Selector (Untuk Simulasi Demo Admin vs Employee) -->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
@@ -68,49 +68,66 @@
             </div>
 
             <!-- ================= BAR FILTER DATA (KATEGORI & STATUS) ================= -->
-            <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row gap-4 items-center justify-between">
-                <div class="flex items-center gap-2 self-start sm:self-auto">
-                    <span class="p-2 bg-slate-800 text-slate-400 dark:bg-slate-800 light:bg-gray-100 light:text-slate-500 rounded-xl text-sm">
-                        <i class="fas fa-filter"></i>
-                    </span>
-                    <p class="text-sm font-semibold text-slate-300 dark:text-slate-300 light:text-slate-700">Filter Data</p>
-                </div>
-                    <div class="grid grid-cols-2 gap-3 w-full sm:w-auto">
-                        <!-- Filter Kategori Kamar -->
+
+            <form action="{{ route('rooms.view') }}" method="GET">
+
+                <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
+                    <!-- LEFT SIDE -->
+                    <div class="flex items-center gap-2">
+                        <span class="p-2 bg-slate-800 text-slate-400 rounded-xl text-sm">
+                            <i class="fas fa-filter"></i>
+                        </span>
+                        <p class="text-sm font-semibold text-slate-300">Filter Data</p>
+                    </div>
+
+                    <!-- RIGHT SIDE -->
+                    <div class="flex flex-col sm:flex-row items-center gap-3">
+
+                        <!-- BUTTON TAMBAH KAMAR -->
+                        <button type="button"
+                            data-url="{{ route('rooms.view') }}"
+                            onclick="window.location.href=this.dataset.url"
+                            class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
+                            <i class="fas fa-arrow-rotate-left"></i>
+                        </button>
+
+                        <!-- FILTER KATEGORI -->
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
                                 <i class="fas fa-layer-group"></i>
                             </span>
-                            <select name="filter_kategori" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
-                                <option value="">Semua Kategori</option>
-                                <option value="Superior">Superior</option>
-                                <option value="Deluxe">Deluxe</option>
-                                <option value="Suite">Suite</option>
+                            <select name="kategori" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
+                                <option value="" disabled selected>Semua Kategori</option>
+                                <option value="Superior" {{ request('kategori') == 'Superior' ? 'selected' : '' }}>Superior</option>
+                                <option value="Deluxe" {{ request('kategori') == 'Deluxe' ? 'selected' : '' }}>Deluxe</option>
+                                <option value="Suite" {{ request('kategori') == 'Suite' ? 'selected' : '' }}>Suite</option>
                             </select>
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
-                                <i class="fas fa-chevron-down"></i>
-                            </span>
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500"> <i class="fas fa-chevron-down"></i> </span>
                         </div>
 
-                        <!-- Filter Status Kamar -->
+                        <!-- FILTER STATUS -->
                         <div class="relative">
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
                                 <i class="fas fa-circle-info"></i>
                             </span>
-                            <select name="filter_status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
-                                <option value="">Semua Status</option>
-                                <option value="tersedia">Tersedia</option>
-                                <option value="penuh">Penuh</option>
-                                <option value="dipesan">Dipesan</option>
-                                <option value="pemeliharaan">Pemeliharaan</option>
+                            <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
+                                <option value="" disabled selected>Semua Status</option>
+                                <option value="tersedia" {{ request('status') == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
+                                <option value="penuh" {{ request('status') == 'penuh' ? 'selected' : '' }}>Penuh</option>
+                                <option value="dipesan" {{ request('status') == 'dipesan' ? 'selected' : '' }}>Dipesan</option>
+                                <option value="pemeliharaan" {{ request('status') == 'pemeliharaan' ? 'selected' : '' }}>Pemeliharaan</option>
                             </select>
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
                                 <i class="fas fa-chevron-down"></i>
                             </span>
                         </div>
+
                     </div>
 
-            </div>
+                </div>
+
+            </form>
 
             <!-- ================= GRID DATA KAMAR ================= -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">

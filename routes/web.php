@@ -34,7 +34,6 @@ Route::middleware('auth', 'role:employee')->group(function () {
 
 //Bisa diakses semua
 Route::middleware('auth')->group(function () {
-    Route::get('/rooms', [RoomController::class, 'index']);
     Route::get('/history', [ReservationController::class, 'history'])->name('history.index');
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
     Route::delete('/reservation/{id}', [ReservationController::class, 'destroy'])->name('reservation.destroy'); 
