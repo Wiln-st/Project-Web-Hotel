@@ -21,7 +21,7 @@ Admin :
         - Tabel Reservasi *
         - Export to PDF
         - Hapus reservasi *
-        - Edit Reservasi 
+        - Edit Reservasi *
 
     - Kelola Karyawan
         - UI
@@ -45,4 +45,4 @@ Admin :
         - bisa pilih lebih dari 1 kamar pada reservasi *
         - filter kategori kamar di bagian kelola kamar *
         - tingkat lantai 
-        - Date Realtime 
+        - Date Realtime *

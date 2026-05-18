@@ -68,10 +68,6 @@
                         <p class="text-lg font-bold text-white dark:text-white light:text-slate-900 mt-0.5">{{ $totalReservations }} <span class="text-xs font-normal text-slate-500">Pesanan</span></p>
                     </div>
                     <div class="p-4 bg-slate-950/40 border border-slate-800/80 rounded-xl dark:bg-slate-950/40 dark:border-slate-800/80 light:bg-gray-50 light:border-gray-200">
-                        <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Reservasi Aktif</p>
-                        <p class="text-lg font-bold text-sky-400 mt-0.5">{{ $activeReservations }} <span class="text-xs font-normal text-slate-500">Check-In</span></p>
-                    </div>
-                    <div class="p-4 bg-slate-950/40 border border-slate-800/80 rounded-xl dark:bg-slate-950/40 dark:border-slate-800/80 light:bg-gray-50 light:border-gray-200">
                         <p class="text-[10px] font-semibold text-slate-500 uppercase tracking-wider">Total Pendapatan</p>
                         <p class="text-lg font-bold text-amber-500 mt-0.5">Rp {{ number_format($totalIncome, 0, ',', '.') }}</p>
                     </div>
@@ -146,7 +142,7 @@
                                         @method('DELETE')
                                         <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
                                     </form>
-                                    <button class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></button>
+                                    <a href="{{ route('reservation.edit', $reservation->id) }}" class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
 

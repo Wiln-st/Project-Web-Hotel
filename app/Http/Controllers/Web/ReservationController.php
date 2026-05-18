@@ -166,15 +166,11 @@ class ReservationController extends Controller
 
         $totalReservations = Reservation::count();
 
-        $activeReservations = Reservation::where('status', 'check_in')
-            ->count();
-
         $totalIncome = Reservation::sum('total_price');
 
         return view('admin.history', compact(
             'reservations',
             'totalReservations',
-            'activeReservations',
             'totalIncome',
             'search'
         ));
@@ -184,12 +180,146 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::findOrFail($id);
 
-        $reservation->rooms->update([
-            'status' => 'tersedia'
-        ]);
+        Room::whereIn('id', $reservation->rooms->pluck('id'))
+            ->update(['status' => 'tersedia']);
 
         $reservation->delete();
 
         return back()->with('success', 'Reservasi berhasil dihapus.');
+    }
+
+    public function edit($id)
+    {
+        $reservation = Reservation::with('rooms')->findOrFail($id);
+        $roomTypes = RoomType::with('rooms')->get();
+
+        return view('admin.reservations_edit', compact('reservation', 'roomTypes'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $reservation = Reservation::with('rooms')->findOrFail($id);
+
+        $request->validate([
+            'customer_name' => 'required',
+            'phone' => 'required',
+            'room_ids' => 'required|array',
+            'check_in' => 'required|date',
+            'check_out' => 'required|date|after_or_equal:check_in',
+        ]);
+
+        // VALIDASI BENTROK
+        foreach ($request->room_ids as $roomId) {
+
+            $bentrok = Reservation::where('id', '!=', $reservation->id)
+
+                ->whereHas('rooms', function ($query) use ($roomId) {
+
+                    $query->where('rooms.id', $roomId);
+                })
+
+                ->where(function ($query) use ($request) {
+
+                    $query->whereBetween('check_in', [
+                        $request->check_in,
+                        $request->check_out
+                    ])
+
+                        ->orWhereBetween('check_out', [
+                            $request->check_in,
+                            $request->check_out
+                        ])
+
+                        ->orWhere(function ($q) use ($request) {
+
+                            $q->where('check_in', '<=', $request->check_in)
+                                ->where('check_out', '>=', $request->check_out);
+                        });
+                })
+
+                ->exists();
+
+            if ($bentrok) {
+
+                $room = Room::find($roomId);
+
+                return back()->with(
+                    'error',
+                    "Kamar {$room->room_number} telah dibooking pada " .
+                        Carbon::parse($request->check_in)->format('d/m/Y') .
+                        " - " .
+                        Carbon::parse($request->check_out)->format('d/m/Y')
+                );
+            }
+        }
+
+        // HITUNG HARI
+        $days = Carbon::parse($request->check_in)
+            ->diffInDays(Carbon::parse($request->check_out));
+
+        if ($days == 0) {
+            $days = 1;
+        }
+
+        // HITUNG FASILITAS
+        $facilitiesTotal = 0;
+
+        $facilities = $request->facilities ?? [];
+
+        foreach ($facilities as $facility) {
+
+            if ($facility == 'Makan') {
+                $facilitiesTotal += 75000;
+            } elseif ($facility == 'Parkir') {
+                $facilitiesTotal += 5000;
+            } elseif ($facility == 'Wifi') {
+                $facilitiesTotal += 25000;
+            }
+        }
+
+        // TOTAL KAMAR
+        $roomTotal = 0;
+
+        $rooms = Room::with('roomType')
+            ->whereIn('id', $request->room_ids)
+            ->get();
+
+        foreach ($rooms as $room) {
+            $roomTotal += $room->roomType->price;
+        }
+
+        $totalPrice =
+            ($roomTotal * $days)
+            +
+            ($facilitiesTotal * $days);
+
+        // RESET STATUS KAMAR LAMA
+        Room::whereIn('id', $reservation->rooms->pluck('id'))
+            ->update([
+                'status' => 'tersedia'
+            ]);
+
+        // UPDATE RESERVASI
+        $reservation->update([
+            'customer_name' => $request->customer_name,
+            'phone' => $request->phone,
+            'check_in' => $request->check_in,
+            'check_out' => $request->check_out,
+            'total_price' => $totalPrice,
+            'facilities' => $facilities,
+        ]);
+
+        // UPDATE PIVOT
+        $reservation->rooms()->sync($request->room_ids);
+
+        // UPDATE STATUS KAMAR BARU
+        Room::whereIn('id', $request->room_ids)
+            ->update([
+                'status' => 'dipesan'
+            ]);
+
+        return redirect()
+            ->route('reservation.history')
+            ->with('success', 'Reservasi berhasil diupdate.');
     }
 }

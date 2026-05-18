@@ -24,12 +24,6 @@ return new class extends Migration
 
             $table->json('facilities')->nullable();
 
-            $table->enum('status', [
-                'booking',
-                'checked_in',
-                'checked_out'
-            ])->default('booking');
-
             $table->timestamps();
         });
     }
