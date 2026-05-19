@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
+use App\Models\Notification;
 use App\Models\Room;
 use App\Models\RoomType;
 use Carbon\Carbon;
@@ -83,8 +84,16 @@ class ReservationController extends Controller
             'status' => 'dipesan'
         ]);
 
+        
         // SIMPAN KE PIVOT
         $reservation->rooms()->attach($request->room_ids);
+
+        Notification::create([
+            'type' => 'reservation',
+            'title' => 'Reservasi Baru',
+            'message' => "{$reservation->customer_name} telah melakukan reservasi kamar.",
+            'reservation_id' => $reservation->id,
+        ]);
 
         // UPDATE STATUS KAMAR
         Room::whereIn('id', $request->room_ids)
@@ -239,5 +248,31 @@ class ReservationController extends Controller
         return redirect()
             ->route('reservation.history')
             ->with('success', 'Reservasi berhasil diupdate.');
+    }
+
+    public function checkIn(Reservation $reservation){
+        Notification::create([
+            'type' => 'check_in',
+            'title' => 'Customer Check-in',
+            'message' => "Tamu telah melakukan check-in.",
+            'reservation_id' => $reservation->id,
+        ]);
+    }
+
+    public function checkOut(Reservation $reservation){
+        Notification::create([
+            'type' => 'check_out',
+            'title' => 'Customer Check-out',
+            'message' => "Tamu telah melakukan check-out.",
+            'reservation_id' => $reservation->id,
+        ]);
+    }
+
+    public function roomSystem(){
+        Notification::create([
+            'type' => 'room_system',
+            'title' => 'Pemberitahuan Sistem Kamar',
+            'message' => "Sistem kamar telah melakukan pembaruan status.",
+        ]);
     }
 }

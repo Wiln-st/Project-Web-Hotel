@@ -116,7 +116,7 @@
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <!-- Makanan/Minuman -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" name="facilities[]" id="facMakan" value="makan" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facMakan" value="Makan" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Makanan & Minuman</p>
                                     <p class="text-xs text-slate-400 mt-0.5">+Rp 75.000</p>
@@ -124,7 +124,7 @@
                             </label>
                             <!-- Parkir Eksklusif -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" name="facilities[]" id="facParkir" value="parkir" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facParkir" value="Parkir" class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Parkir Eksklusif</p>
                                     <p class="text-xs text-slate-400 mt-0.5">+Rp 10.000</p>
@@ -132,7 +132,7 @@
                             </label>
                             <!-- Free High-Speed Wifi -->
                             <label class="flex items-center p-3 bg-slate-950/40 border border-slate-800 rounded-xl cursor-pointer select-none hover:border-amber-500/50 transition dark:bg-slate-950/40 dark:border-slate-800 light:bg-gray-50 light:border-gray-200">
-                                <input type="checkbox" name="facilities[]" id="facWifi" value="wifi" checked class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
+                                <input type="checkbox" name="facilities[]" id="facWifi" value="Wifi" checked class="rounded bg-slate-800 border-slate-700 text-amber-500 focus:ring-amber-500 w-4 h-4 mr-3">
                                 <div>
                                     <p class="text-sm font-bold text-white dark:text-white light:text-slate-800">Free High-Speed Wi-Fi</p>
                                     <p class="text-xs text-emerald-400 mt-0.5">Gratis</p>

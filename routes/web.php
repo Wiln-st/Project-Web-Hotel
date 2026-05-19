@@ -3,6 +3,7 @@
 use App\Http\Controllers\Web\AdminController;
 use App\Http\Controllers\Web\AuthWebController;
 use App\Http\Controllers\Web\EmployeeController;
+use App\Http\Controllers\Web\NotificationController;
 use App\Http\Controllers\Web\ReservationController;
 use App\Http\Controllers\Web\RoomController;
 use Illuminate\Support\Facades\Route;
@@ -25,19 +26,24 @@ Route::middleware('auth', 'role:admin')->group(function () {
     Route::get('admin/history', [ReservationController::class, 'history'])->name('reservation.history');
     Route::get('admin/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
     Route::put('admin/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
-    Route::get('admin/notifikasi', [AdminController::class, 'notifikasi'])->name('notifikasi');
+    Route::get('admin/notifikasi', [NotificationController::class, 'notification'])->name('notifikasi');
+    Route::post('admin/notification/{notification}/check-in', [NotificationController::class, 'checkIn'])->name('notification.checkIn');
+    Route::post('admin/notification/{notification}/check-out', [NotificationController::class, 'checkOut'])->name('notification.checkOut');
     Route::get('admin/manageemployee', [AdminController::class, 'manageemployee'])->name('manageemployee');
 });
 
 
 //Bisa diakses Employee
 Route::middleware('auth', 'role:employee')->group(function () {
-    Route::get('employee/rooms', [EmployeeController::class, 'room'])->name('employee.room');
+    Route::get('employee/rooms', [EmployeeController::class, 'rooms'])->name('employee.rooms');
 });
 
 //Bisa diakses semua
 Route::middleware('auth')->group(function () {
     Route::get('/history', [ReservationController::class, 'history'])->name('history.index');
     Route::post('/reservation', [ReservationController::class, 'store'])->name('reservation.store');
-    Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy'); 
+    Route::delete('/reservation/{reservation}', [ReservationController::class, 'destroy'])->name('reservation.destroy');
+    Route::delete('/notification/{id}', [NotificationController::class, 'destroy'])->name('notification.destroy');
+    Route::delete('/notification/clear-all', [NotificationController::class, 'clearAll'])->name('notification.clearAll');
+    Route::post('/notification/refresh-status', [NotificationController::class, 'refreshNotification'])->name('notification.refresh');
 });

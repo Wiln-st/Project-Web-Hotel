@@ -24,4 +24,9 @@ class Reservation extends Model
     {
         return $this->belongsToMany(Room::class);
     }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
+    }
 }
