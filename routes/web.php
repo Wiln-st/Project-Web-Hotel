@@ -66,6 +66,7 @@ Route::prefix('admin')
         Route::post('/rooms/refresh-status', [RoomController::class, 'refreshStatus'])
             ->name('admin.rooms.refreshStatus');
 
+        Route::patch('/rooms/{room}/status', [RoomController::class, 'updateStatus'])->name('admin.rooms.updateStatus');
 
         /*
         |--------------------------------------------------------------------------

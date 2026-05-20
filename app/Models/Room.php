@@ -6,6 +6,7 @@ use App\Models\Reservation;
 use App\Models\RoomType;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Room extends Model
 {
@@ -28,5 +29,16 @@ class Room extends Model
     public function reservations()
     {
         return $this->belongsToMany(Reservation::class);
+    }
+
+    public function getActiveReservationAttribute()
+    {
+        return $this->reservations()
+
+            ->where('check_in', '<=', now())
+            ->where('check_out', '>', now())
+
+            ->latest()
+            ->first();
     }
 }

@@ -8,7 +8,8 @@ Admin :
         - UI *
         - Tambah kamar *
         - Hapus kamar *
-        - Info kamar masih hardcode
+        - Info kamar masih hardcode *
+        - Edit kamar *
 
     - Reservasi 
         - UI *
@@ -24,12 +25,11 @@ Admin :
         - Edit Reservasi *
 
     - Kelola Karyawan
-        - UI
-        - Tabel karyawan
-        - Tambah Karyawan
-        - Hapus karyawan
-        - Edit karyawan
-        - Status Aktif/Nonaktif karyawan
+        - UI *
+        - Tabel karyawan *
+        - Tambah Karyawan 
+        - Hapus karyawan 
+        - Status Aktif/Nonaktif karyawan(untuk nanti aplikasi absen)
 
     - Dark/Light mode
         - UI 
@@ -41,9 +41,7 @@ Admin :
 
 
     = Fitur Lain
-        - saat masuk hari check in status otomatis kamar ganti menjadi penuh
+        - saat masuk hari check in status otomatis kamar ganti menjadi penuh * (manual melalui notifikasi)
         - bisa pilih lebih dari 1 kamar pada reservasi *
         - filter kategori kamar di bagian kelola kamar *
-        - tingkat lantai 
         - Date Realtime *
-        - kamar terhapus saat kamar tersebut dipesan

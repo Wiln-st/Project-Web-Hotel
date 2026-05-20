@@ -169,15 +169,6 @@
                     </table>
                 </div>
 
-                <!-- Pagination Sederhana (Opsional untuk estetika tabel data) -->
-                <div class="flex items-center justify-between mt-5 pt-4 border-t border-slate-800/60 dark:border-slate-800/60 light:border-gray-100 text-xs text-slate-400">
-                    <p>Menampilkan 1-3 dari {{ $totalReservations }} data</p>
-                    <div class="flex items-center gap-1">
-                        <button class="p-2 bg-slate-950 border border-slate-800 rounded-lg hover:text-white disabled:opacity-50"><i class="fas fa-chevron-left"></i></button>
-                        <button class="p-2 bg-slate-950 border border-slate-800 rounded-lg hover:text-white"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                </div>
-
             </div>
 
         </main>

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Room;
 use App\Models\RoomType;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class RoomController extends Controller
 {
@@ -63,5 +64,41 @@ class RoomController extends Controller
         $room->delete();
 
         return back()->with('success', 'Kamar berhasil dihapus.');
+    }
+
+    public function updateStatus(Request $request, Room $room)
+    {
+        $request->validate([
+            'status' => 'required|in:available,maintenance,occupied'
+        ]);
+
+        $room->update([
+            'status' => $request->status
+        ]);
+        return back()->with('success', 'Status kamar berhasil diupdate');
+    }
+
+    public function update(Request $request, Room $room)
+    {
+        $request->validate([
+            'room_number' => [
+                'required',
+                'numeric',
+                Rule::unique('rooms', 'room_number')->ignore($room->id),
+            ],
+
+            'room_type_id' => 'required',
+            'status' => 'required',
+        ], [
+            'room_number.unique' => 'Nomor kamar sudah digunakan!',
+        ]);
+
+        $room->update([
+            'room_number' => $request->room_number,
+            'room_type_id' => $request->room_type_id,
+            'status' => $request->status,
+        ]);
+
+        return back()->with('success', 'Kamar berhasil diupdate');
     }
 }

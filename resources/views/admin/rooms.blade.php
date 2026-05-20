@@ -107,21 +107,21 @@
                         </div>
 
                         <!-- FILTER STATUS -->
-                        <div class="relative"> 
-                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs"> 
-                                <i class="fas fa-circle-info"></i> 
-                            </span> 
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
+                                <i class="fas fa-circle-info"></i>
+                            </span>
                             <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
                                 <option value="" disabled selected>Semua Status</option>
                                 <option value="available" {{ request('status') == 'avalable' ? 'selected' : '' }}>Tersedia</option>
                                 <option value="occupied" {{ request('status') == 'occupied' ? 'selected' : '' }}>Penuh</option>
                                 <option value="booked" {{ request('status') == 'booked' ? 'selected' : '' }}>Dipesan</option>
                                 <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Pemeliharaan</option>
-                            </select> 
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500"> 
-                                <i class="fas fa-chevron-down"></i> 
+                            </select>
+                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500">
+                                <i class="fas fa-chevron-down"></i>
                             </span>
-                         </div>
+                        </div>
 
                     </div>
 
@@ -156,10 +156,20 @@
                             <div class="relative">
                                 <button onclick="toggleActionMenu('menu{{ $room->id }}')" class="text-slate-400 hover:text-white light:hover:text-slate-900 p-1"><i class="fas fa-ellipsis-v"></i></button>
                                 <div id="menu{{ $room->id }}" class="hidden absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-30 py-1 text-sm text-slate-200 dark:bg-slate-800 dark:border-slate-700 light:bg-white light:border-gray-200 light:text-slate-700">
-                                    <button onclick="openModal('infoModal')" 
-                                     class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100">
-                                     <i class="fas fa-info-circle w-5 text-amber-500"></i>
-                                      Info Kamar
+                                    <button onclick="openModal('infoModal',this)"
+                                        data-id="{{ $room->id }}"
+                                        data-room="{{ $room->room_number }}"
+                                        data-type="{{ $room->room_type_id }}"
+                                        data-price="{{ number_format($room->roomType->price) }}"
+                                        data-status="{{ $room->realtime_status }}"
+
+                                        data-customer="{{ optional($room->activeReservation)->customer_name ?? '-' }}"
+                                        data-checkin="{{ optional($room->activeReservation)->check_in ?? '-' }}"
+                                        data-checkout="{{ optional($room->activeReservation)->check_out ?? '-' }}"
+
+                                        class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100">
+                                        <i class="fas fa-info-circle w-5 text-amber-500"></i>
+                                        Info Kamar
                                     </button>
                                     <!-- Set Status (Dengan Submenu / Hover Group) -->
                                     <div class="relative group/submenu">
@@ -172,21 +182,32 @@
 
                                         <!-- SUBMENU PILIHAN STATUS (Muncul saat menu 'Set Status' di-hover) -->
                                         <div class="absolute left-full top-0 ml-1 hidden group-hover/submenu:block w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1 dark:bg-slate-850 dark:border-slate-700 light:bg-white light:border-gray-200">
-                                            <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-emerald-400">
-                                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Available
-                                            </button>
-                                            <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-rose-400">
-                                                <span class="w-2 h-2 bg-rose-500 rounded-full mr-2"></span> Occupied
-                                            </button>
-                                            <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-sky-400">
-                                                <span class="w-2 h-2 bg-sky-500 rounded-full mr-2"></span> Booked
-                                            </button>
-                                            <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-amber-400">
-                                                <span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> Maintenance
-                                            </button>
+                                            <form action="{{ route('admin.rooms.updateStatus', $room->id ) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="available">
+                                                <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-emerald-400">
+                                                    <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Available
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.rooms.updateStatus', $room->id ) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="occupied">
+                                                <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-red-100 text-xs font-semibold text-red-400">
+                                                    <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span> Occupied
+                                                </button>
+                                            </form>
+                                            <form action="{{ route('admin.rooms.updateStatus',$room->id) }}" method="POST">
+                                                @csrf
+                                                @method('PATCH')
+                                                <input type="hidden" name="status" value="maintenance">
+                                                <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-amber-400">
+                                                    <span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> Maintenance
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
-                                    <button class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100"><i class="fas fa-calendar-plus w-5 text-emerald-500"></i> Booking</button>
                                     <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
                                         @csrf
                                         @method('DELETE')
@@ -234,29 +255,30 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <p class="text-xs text-slate-400">Nomor Kamar</p>
-                        <p class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5">Room 101</p>
+                        <p id="modalRoomNumber" class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5"></p>
                     </div>
                     <div>
                         <p class="text-xs text-slate-400">Kategori</p>
-                        <p class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5">Deluxe King Bed</p>
+                        <p id="modalRoomType" class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5"></p>
                     </div>
                     <div>
                         <p class="text-xs text-slate-400">Harga Sewa</p>
-                        <p class="font-bold text-amber-500 mt-0.5">Rp 750,000 /malam</p>
+                        <p id="modalRoomPrice" class="font-bold text-amber-500 mt-0.5">Rp 750,000 /malam</p>
                     </div>
                     <div>
                         <p class="text-xs text-slate-400">Status Kamar</p>
-                        <span class="inline-block mt-1 px-2 py-0.5 text-xs font-bold rounded bg-rose-500/10 text-rose-400">Penuh (In Use)</span>
+                        <span id="modalRoomStatus" class="inline-block mt-1 px-2 py-0.5 text-xs font-bold rounded"></span>
                     </div>
                 </div>
                 <div class="pt-3 border-t border-slate-800 dark:border-slate-800 light:border-gray-100">
                     <p class="text-xs text-slate-400">Nama Pemesan</p>
-                    <p class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5">Andika Pratama Mulia</p>
+                    <p id="modalCustomer" class="font-bold text-white dark:text-white light:text-slate-900 mt-0.5"></p>
                 </div>
             </div>
             <div class="p-4 bg-slate-950/40 dark:bg-slate-950/40 light:bg-gray-50 border-t border-slate-800 dark:border-slate-800 light:border-gray-100 flex justify-end gap-3">
                 <button onclick="closeModal('infoModal')" class="px-4 py-2 bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold hover:bg-slate-700 light:bg-gray-200 light:text-slate-700 light:hover:bg-gray-300">Tutup</button>
-                <button onclick="switchModal('infoModal', 'editPesananModal')" class="px-4 py-2 bg-amber-500 text-slate-900 rounded-lg text-xs font-bold hover:bg-amber-600 flex items-center gap-1.5"><i class="fas fa-pen-to-square"></i> Edit Pesanan</button>
+                <button id="btnEditRoom"
+                    class="px-4 py-2 bg-amber-500 text-slate-900 rounded-lg text-xs font-bold hover:bg-amber-600 flex items-center gap-1.5"><i class="fas fa-pen-to-square"></i> Edit Kamar</button>
             </div>
         </div>
     </div>
@@ -322,8 +344,6 @@
                         <select id="inputStatusKamar" name="status" required
                             class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
                             <option value="available">Available</option>
-                            <option value="occupied">Occupied</option>
-                            <option value="booked">Booked</option>
                             <option value="maintenance">Maintenance</option>
                         </select>
                     </div>
@@ -332,6 +352,91 @@
                 <!-- Action Buttons -->
                 <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 dark:border-slate-800 light:border-gray-100">
                     <button type="button" onclick="closeModal('tambahKamarModal')"
+                        class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold hover:bg-slate-700 light:bg-gray-200 light:text-slate-700 light:hover:bg-gray-300 transition">
+                        Batal
+                    </button>
+                    <button type="submit"
+                        class="px-5 py-2.5 bg-amber-500 text-slate-900 rounded-lg text-xs font-bold hover:bg-amber-600 shadow-lg shadow-amber-500/10 transition transform active:scale-95 flex items-center gap-2">
+                        <i class="fas fa-save"></i> Simpan Kamar
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ================= MODAL: EDIT KAMAR ================= -->
+    <div id="editRoomModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-md w-full overflow-hidden shadow-2xl transition-all duration-300 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200">
+
+            <!-- Modal Header -->
+            <div class="p-6 border-b border-slate-800 dark:border-slate-800 light:border-gray-100 flex justify-between items-center">
+                <h3 class="text-lg font-bold text-white dark:text-white light:text-slate-900">
+                    <i class="fas fa-bed text-amber-500 mr-2"></i>Edit Kamar Baru
+                </h3>
+                <button onclick="closeModal('editRoomModal')" class="text-slate-400 hover:text-white light:hover:text-slate-900">
+                    <i class="fas fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Form -->
+            <form id="editRoomForm" action="" method="POST" class="p-6 space-y-4">
+                @csrf
+                @method('PUT')
+                <!-- Input Nomor Kamar -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Nomor Kamar</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fas fa-door-closed"></i>
+                        </span>
+                        <input type="number" id="editRoomNumber" name="room_number" required min="1"
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900"
+                            placeholder="Contoh: Room 004">
+                        @error('room_number')
+                        <p class="text-red-500 text-xs mt-1">
+                            {{ $message }}
+                        </p>
+                        @enderror
+                    </div>
+                </div>
+
+                <!-- Select Tipe Kamar -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Tipe Kamar</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fas fa-layer-group"></i>
+                        </span>
+                        <select id="editRoomType" name="room_type_id" required
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
+                            <option value="" disabled selected>Pilih Tipe Kamar</option>
+                            @foreach($types as $type)
+                            <option value="{{ $type->id }}">
+                                {{ $type->name }}
+                            </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Select Status Awal -->
+                <div>
+                    <label class="block text-xs font-semibold text-slate-400 mb-1.5 uppercase tracking-wider">Status Awal</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500">
+                            <i class="fas fa-circle-info"></i>
+                        </span>
+                        <select id="editRoomStatus" name="status" required
+                            class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
+                            <option value="available">Available</option>
+                            <option value="maintenance">Maintenance</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="flex justify-end gap-3 pt-4 border-t border-slate-800 dark:border-slate-800 light:border-gray-100">
+                    <button type="button" onclick="closeModal('editRoomModal')"
                         class="px-4 py-2.5 bg-slate-800 text-slate-300 rounded-lg text-xs font-semibold hover:bg-slate-700 light:bg-gray-200 light:text-slate-700 light:hover:bg-gray-300 transition">
                         Batal
                     </button>
@@ -366,8 +471,100 @@
 
         // 2. Fungsi Kontrol Modal Pop Up
 
-        function openModal(id) {
+        function openModal(id, button) {
+
             document.getElementById(id).classList.remove('hidden');
+
+            // isi data modal
+            document.getElementById('modalRoomNumber')
+                .innerText = 'Kamar ' + button.dataset.room;
+
+            document.getElementById('modalRoomType')
+                .innerText = button.dataset.type;
+
+            document.getElementById('modalRoomPrice')
+                .innerText = 'Rp ' + button.dataset.price;
+
+            document.getElementById('modalCustomer')
+                .innerText = button.dataset.customer;
+
+            // status
+            const status = button.dataset.status;
+
+            let badge = '';
+
+            if (status == 'available') {
+
+                badge =
+                    `
+            <span class="px-2 py-1 rounded bg-emerald-500/10 text-emerald-400 text-xs font-bold">
+                Available
+            </span>
+        `;
+
+            } else if (status == 'penuh') {
+
+                badge =
+                    `
+            <span class="px-2 py-1 rounded bg-rose-500/10 text-rose-400 text-xs font-bold">
+                Penuh
+            </span>
+        `;
+
+            } else {
+
+                badge =
+                    `
+            <span class="px-2 py-1 rounded bg-amber-500/10 text-amber-400 text-xs font-bold">
+                Maintenance
+            </span>
+        `;
+            }
+
+            document.getElementById('modalRoomStatus')
+                .innerHTML = badge;
+
+            // SET DATA EDIT BUTTON
+            const editBtn = document.getElementById('btnEditRoom');
+
+            editBtn.dataset.id = button.dataset.id;
+            editBtn.dataset.room = button.dataset.room;
+            editBtn.dataset.type = button.dataset.type;
+            editBtn.dataset.status = button.dataset.status;
+
+            // onclick edit
+            editBtn.onclick = function() {
+                openEditModal(this);
+            }
+
+        }
+
+        function openEditModal(button) {
+
+            // buka modal
+            document
+                .getElementById('editRoomModal')
+                .classList.remove('hidden');
+
+            // ambil dataset
+            const id = button.dataset.id;
+            const room = button.dataset.room;
+            const type = button.dataset.type;
+            const status = button.dataset.status;
+
+            // isi form
+            document.getElementById('editRoomNumber')
+                .value = room;
+
+            document.getElementById('editRoomType')
+                .value = type;
+
+            document.getElementById('editRoomStatus')
+                .value = status;
+
+            // action form
+            document.getElementById('editRoomForm')
+                .action = `/admin/rooms/${id}`;
         }
 
         function closeModal(id) {
