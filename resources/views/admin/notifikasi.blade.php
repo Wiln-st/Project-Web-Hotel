@@ -27,19 +27,20 @@
 
                 <!-- Tombol Hapus Semua Notifikasi sekaligus -->
                 <div class="flex items-center gap-3">
-                    <form action="{{ route('notification.refresh') }}" method="POST">
+                    <form action="{{ route('admin.notifications.refresh') }}" method="POST">
                         @csrf
                         <button type="submit"
                             class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
                             <i class="fas fa-arrow-rotate-left"></i>
                         </button>
                     </form>
-                    <form action="{{ route('notification.clearAll') }}" method="POST">
+                    <form action="{{ route('admin.notifications.clearAll') }}" method="POST">
                         @csrf
                         @method('DELETE')
 
                         <button
-                            type="submit">
+                            type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-850 text-red-400 font-semibold px-4 py-2.5 rounded-xl border border-slate-800 hover:border-red-500/30 transition flex items-center justify-center gap-2 text-xs shadow-sm">
+                            <i class="fas fa-trash-can"></i>
                             Bersihkan Semua Notifikasi
                         </button>
                     </form>
@@ -115,7 +116,7 @@
 
                         {{-- BUTTON CHECK-IN --}}
                         @if($notification->type == 'check_in')
-                        <form action="{{ route('notification.checkIn', $notification->id) }}" method="POST">
+                        <form action="{{ route('admin.notifications.checkIn', $notification->id) }}" method="POST">
                             @csrf
 
                             <button type="submit"
@@ -130,7 +131,7 @@
 
                         {{-- BUTTON CHECK-OUT --}}
                         @if($notification->type == 'check_out')
-                        <form action="{{ route('notification.check_out', $notification->id) }}" method="POST">
+                        <form action="{{ route('admin.notifications.check_out', $notification->id) }}" method="POST">
                             @csrf
 
                             <button type="submit"
@@ -144,7 +145,7 @@
 
 
                         <!-- Tombol Hapus -->
-                        <form action="{{ route('notification.destroy', $notification->id) }}" method="POST">
+                        <form action="{{ route('admin.notifications.destroy', $notification->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
 

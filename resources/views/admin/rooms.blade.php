@@ -36,7 +36,7 @@
                 <!-- Tersedia -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
                     <div class="flex justify-between items-start">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Tersedia</p>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Available</p>
                         <span class="p-1.5 bg-emerald-500/10 text-emerald-400 rounded-lg text-xs"><i class="fas fa-check"></i></span>
                     </div>
                     <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$availableRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
@@ -44,7 +44,7 @@
                 <!-- Penuh -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
                     <div class="flex justify-between items-start">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Penuh</p>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Occupied</p>
                         <span class="p-1.5 bg-rose-500/10 text-rose-400 rounded-lg text-xs"><i class="fas fa-door-closed"></i></span>
                     </div>
                     <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$fullRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
@@ -52,7 +52,7 @@
                 <!-- Dipesan -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
                     <div class="flex justify-between items-start">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Dipesan</p>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Booked</p>
                         <span class="p-1.5 bg-sky-500/10 text-sky-400 rounded-lg text-xs"><i class="fas fa-bookmark"></i></span>
                     </div>
                     <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$bookedRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
@@ -60,7 +60,7 @@
                 <!-- Maintenance -->
                 <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-xl shadow-sm">
                     <div class="flex justify-between items-start">
-                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Pemeliharaan</p>
+                        <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Maintenance</p>
                         <span class="p-1.5 bg-amber-500/10 text-amber-400 rounded-lg text-xs"><i class="fas fa-screwdriver-wrench"></i></span>
                     </div>
                     <h3 class="text-2xl font-bold text-white dark:text-white light:text-slate-900 mt-2">{{$maintenanceRooms}} <span class="text-xs font-normal text-slate-500">Kamar</span></h3>
@@ -69,7 +69,7 @@
 
             <!-- ================= BAR FILTER DATA (KATEGORI & STATUS) ================= -->
 
-            <form action="{{ route('rooms.view') }}" method="GET">
+            <form action="{{ route('admin.rooms.index') }}" method="GET">
 
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
@@ -86,7 +86,7 @@
 
                         <!-- BUTTON TAMBAH KAMAR -->
                         <button type="button"
-                            data-url="{{ route('rooms.view') }}"
+                            data-url="{{ route('admin.rooms.index') }}"
                             onclick="window.location.href=this.dataset.url"
                             class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
                             <i class="fas fa-arrow-rotate-left"></i>
@@ -113,10 +113,10 @@
                             </span> 
                             <select name="status" onchange="this.form.submit()" class="w-full sm:w-48 pl-9 pr-8 py-2 bg-slate-950 border border-slate-800 text-xs text-slate-300 rounded-xl outline-none focus:ring-1 focus:ring-amber-500 dark:bg-slate-950 dark:border-slate-800 light:bg-gray-50 light:border-gray-300 light:text-slate-800 cursor-pointer appearance-none">
                                 <option value="" disabled selected>Semua Status</option>
-                                <option value="tersedia" {{ request('status') == 'tersedia' ? 'selected' : '' }}>Tersedia</option>
-                                <option value="penuh" {{ request('status') == 'penuh' ? 'selected' : '' }}>Penuh</option>
-                                <option value="dipesan" {{ request('status') == 'dipesan' ? 'selected' : '' }}>Dipesan</option>
-                                <option value="pemeliharaan" {{ request('status') == 'pemeliharaan' ? 'selected' : '' }}>Pemeliharaan</option>
+                                <option value="available" {{ request('status') == 'avalable' ? 'selected' : '' }}>Tersedia</option>
+                                <option value="occupied" {{ request('status') == 'occupied' ? 'selected' : '' }}>Penuh</option>
+                                <option value="booked" {{ request('status') == 'booked' ? 'selected' : '' }}>Dipesan</option>
+                                <option value="maintenance" {{ request('status') == 'maintenance' ? 'selected' : '' }}>Pemeliharaan</option>
                             </select> 
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-[10px] text-slate-500"> 
                                 <i class="fas fa-chevron-down"></i> 
@@ -156,7 +156,11 @@
                             <div class="relative">
                                 <button onclick="toggleActionMenu('menu{{ $room->id }}')" class="text-slate-400 hover:text-white light:hover:text-slate-900 p-1"><i class="fas fa-ellipsis-v"></i></button>
                                 <div id="menu{{ $room->id }}" class="hidden absolute right-0 mt-2 w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-xl z-30 py-1 text-sm text-slate-200 dark:bg-slate-800 dark:border-slate-700 light:bg-white light:border-gray-200 light:text-slate-700">
-                                    <button onclick="openModal('infoModal')" class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100"><i class="fas fa-info-circle w-5 text-amber-500"></i> Info Kamar</button>
+                                    <button onclick="openModal('infoModal')" 
+                                     class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100">
+                                     <i class="fas fa-info-circle w-5 text-amber-500"></i>
+                                      Info Kamar
+                                    </button>
                                     <!-- Set Status (Dengan Submenu / Hover Group) -->
                                     <div class="relative group/submenu">
                                         <button class="flex items-center justify-between w-full px-4 py-2.5 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 transition">
@@ -169,21 +173,21 @@
                                         <!-- SUBMENU PILIHAN STATUS (Muncul saat menu 'Set Status' di-hover) -->
                                         <div class="absolute left-full top-0 ml-1 hidden group-hover/submenu:block w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1 dark:bg-slate-850 dark:border-slate-700 light:bg-white light:border-gray-200">
                                             <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-emerald-400">
-                                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Tersedia
+                                                <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Available
                                             </button>
                                             <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-rose-400">
-                                                <span class="w-2 h-2 bg-rose-500 rounded-full mr-2"></span> Penuh
+                                                <span class="w-2 h-2 bg-rose-500 rounded-full mr-2"></span> Occupied
                                             </button>
                                             <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-sky-400">
-                                                <span class="w-2 h-2 bg-sky-500 rounded-full mr-2"></span> Dipesan
+                                                <span class="w-2 h-2 bg-sky-500 rounded-full mr-2"></span> Booked
                                             </button>
                                             <button class="flex items-center w-full px-4 py-2 hover:bg-slate-800 dark:hover:bg-slate-900 light:hover:bg-gray-100 text-xs font-semibold text-amber-400">
-                                                <span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> Pemeliharaan
+                                                <span class="w-2 h-2 bg-amber-500 rounded-full mr-2"></span> Maintenance
                                             </button>
                                         </div>
                                     </div>
                                     <button class="flex items-center w-full px-4 py-2 hover:bg-slate-900 dark:hover:bg-slate-900 light:hover:bg-gray-100"><i class="fas fa-calendar-plus w-5 text-emerald-500"></i> Booking</button>
-                                    <form action="{{ route('rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
+                                    <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="flex items-center w-full px-4 py-2 text-red-400 hover:bg-red-500/10"><i class="fas fa-trash-can w-5"></i> Hapus Kamar</button>
@@ -196,13 +200,13 @@
                         <div class="border-t border-slate-800/60 dark:border-slate-800/60 light:border-gray-100 pt-3 mt-4 flex justify-between items-center">
                             <span class="text-sm font-bold text-amber-500">Rp {{ number_format($room->roomType->price, 0, ',', '.') }}<span class="text-xs font-normal text-slate-500">/malam</span></span>
                             <span class="px-2.5 py-1 text-xs font-bold rounded-md
-                            @if($room->status == 'tersedia')
+                            @if($room->status == 'available')
                                 bg-green-500/10 text-green-400
 
-                            @elseif($room->status == 'penuh')
+                            @elseif($room->status == 'occupied')
                                 bg-red-500/10 text-red-400
 
-                            @elseif($room->status == 'dipesan')
+                            @elseif($room->status == 'booked')
                                 bg-sky-500/10 text-sky-400
 
                             @else
@@ -273,7 +277,7 @@
             </div>
 
             <!-- Modal Form -->
-            <form action="{{ route('rooms.store') }}" method="POST" class="p-6 space-y-4">
+            <form action="{{ route('admin.rooms.store') }}" method="POST" class="p-6 space-y-4">
                 @csrf
 
                 <!-- Input Nomor Kamar -->
@@ -317,10 +321,10 @@
                         </span>
                         <select id="inputStatusKamar" name="status" required
                             class="w-full pl-10 pr-4 py-2.5 bg-slate-800 border border-slate-700 text-white rounded-lg outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent dark:bg-slate-800 dark:border-slate-700 dark:text-white light:bg-gray-50 light:border-gray-300 light:text-slate-900 cursor-pointer">
-                            <option value="tersedia">Tersedia</option>
-                            <option value="penuh">Penuh</option>
-                            <option value="dipesan">Dipesan</option>
-                            <option value="pemeliharaan">Pemeliharaan (Maintenance)</option>
+                            <option value="available">Available</option>
+                            <option value="occupied">Occupied</option>
+                            <option value="booked">Booked</option>
+                            <option value="maintenance">Maintenance</option>
                         </select>
                     </div>
                 </div>

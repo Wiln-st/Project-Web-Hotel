@@ -12,13 +12,13 @@ use Illuminate\Http\Request;
 
 class ReservationController extends Controller
 {
-    public function reservation()
+    public function index()
     {
         $roomTypes = RoomType::with(['rooms' => function ($query) {
-            $query->where('status', 'tersedia');
+            $query->where('status', 'available');
         }])->get();
 
-        $rooms = Room::with('roomType')->where('status', 'tersedia')->get();
+        $rooms = Room::with('roomType')->where('status', 'available')->get();
 
         return view('admin.reservations', compact('roomTypes', 'rooms'));
     }
@@ -81,7 +81,7 @@ class ReservationController extends Controller
             'check_out' => $request->check_out,
             'total_price' => $totalPrice,
             'facilities' => $facilities,
-            'status' => 'dipesan'
+            'status' => 'booked'
         ]);
 
         
@@ -98,7 +98,7 @@ class ReservationController extends Controller
         // UPDATE STATUS KAMAR
         Room::whereIn('id', $request->room_ids)
             ->update([
-                'status' => 'dipesan'
+                'status' => 'booked'
             ]);
 
         return back()->with(
@@ -151,7 +151,7 @@ class ReservationController extends Controller
         $reservation = Reservation::findOrFail($id);
 
         Room::whereIn('id', $reservation->rooms->pluck('id'))
-            ->update(['status' => 'tersedia']);
+            ->update(['status' => 'available']);
 
         $reservation->delete();
 
@@ -162,7 +162,7 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with('rooms')->findOrFail($id);
         $roomTypes = RoomType::with(['rooms' => function ($query) {
-            $query->where('status', 'tersedia');
+            $query->where('status', 'available');
         }])->get();
 
         return view('admin.reservations_edit', compact('reservation', 'roomTypes'));
@@ -223,7 +223,7 @@ class ReservationController extends Controller
         // RESET STATUS KAMAR LAMA
         Room::whereIn('id', $reservation->rooms->pluck('id'))
             ->update([
-                'status' => 'tersedia'
+                'status' => 'available'
             ]);
 
         // UPDATE RESERVASI

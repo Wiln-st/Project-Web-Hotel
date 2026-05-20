@@ -18,7 +18,7 @@ class RoomSeeder extends Seeder
             Room::create([
                 'room_number' => (int) $i,
                 'room_type_id' => rand(1, 3),
-                'status' => 'tersedia',
+                'status' => 'available',
             ]);
         }
     }

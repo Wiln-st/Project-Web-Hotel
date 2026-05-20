@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->integer('room_number')->unique();
             $table->foreignId('room_type_id')->constrained('room_types')->onDelete('cascade');
-            $table->enum('status', ['tersedia', 'penuh', 'dipesan', 'pemeliharaan'])->default('tersedia');
+            $table->enum('status', ['available', 'occupied', 'booked', 'maintenance'])->default('available');
             $table->timestamps();
         });
     }

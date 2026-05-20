@@ -38,7 +38,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Kiri: Input Form (Mengambil 2 Kolom) -->
-                <form id="formReservasi" action="{{ route('reservation.store') }}" method="POST" class="lg:col-span-2 space-y-6 bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-6 rounded-2xl shadow-sm">
+                <form id="formReservasi" action="{{ route('admin.reservations.store') }}" method="POST" class="lg:col-span-2 space-y-6 bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-6 rounded-2xl shadow-sm">
                     @csrf
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <!-- Nama Pemesan -->

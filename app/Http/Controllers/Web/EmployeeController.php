@@ -7,8 +7,8 @@ use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
-    public function room()
+    public function index()
     {
-        return view('employee.room');
+        return view('admin.manageemployee');
     }
 }

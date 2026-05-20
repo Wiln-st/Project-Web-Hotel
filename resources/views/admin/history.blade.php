@@ -34,7 +34,7 @@
 
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
                         <!-- Form Cari Pesanan -->
-                        <form action="{{ route('reservation.history') }}" method="GET" class="relative w-full sm:w-72">
+                        <form action="{{ route('admin.reservations.history') }}" method="GET" class="relative w-full sm:w-72">
 
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
                                 <i class="fas fa-magnifying-glass"></i>
@@ -85,6 +85,7 @@
                                 <th class="py-3 px-4">Check-in</th>
                                 <th class="py-3 px-4">Check-out</th>
                                 <th class="py-3 px-4">Fasilitas</th>
+                                <th class="py-3 px-4">Status</th>
                                 <th class="py-3 px-4">Total</th>
                                 <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
@@ -135,14 +136,26 @@
                                     @endif
                                 </td>
 
+                                <td class="py-3.5 px-4 font-semibold text-white dark:text-white light:text-slate-900">
+                                    @if($reservation->status == 'check_in')
+                                    CheckIn
+                                    @elseif($reservation->status == 'check_out')
+                                    CheckOut
+                                    @elseif($reservation->status == 'booked')
+                                    Booked
+                                    @else
+                                    Cancel
+                                    @endif
+                                </td>
+
                                 <td class="py-3.5 px-4 font-medium text-amber-500">Rp {{ number_format($reservation->total_price, 0, ',', '.') }}</td>
                                 <td class="py-3.5 px-4 text-center flex items-center justify-center gap-2">
-                                    <form action="{{ route('reservation.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('Ingin menghapus pesanan ini ?')">
+                                    <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('Ingin menghapus pesanan ini ?')">
                                         @csrf
                                         @method('DELETE')
                                         <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
                                     </form>
-                                    <a href="{{ route('reservation.edit', $reservation->id) }}" class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></a>
+                                    <a href="{{ route('admin.reservations.edit', $reservation->id) }}" class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></a>
                                 </td>
                             </tr>
 

@@ -14,7 +14,12 @@ return new class extends Migration
         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
 
-            $table->string('type');
+            $table->enum('type', [
+                'reservation',
+                'check_in',
+                'check_out',
+                'room_system'
+            ]);
 
             $table->string('title');
 

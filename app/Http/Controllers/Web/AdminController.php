@@ -12,10 +12,7 @@ class AdminController extends Controller
         return view('admin.dashboard', 
         ['today' => Carbon::now()]);
     }
-    public function manageemployee()
-    {
-        return view('admin.manageemployee');
-    }
+
     public function notifikasi()
     {
         return view('admin.notifikasi');

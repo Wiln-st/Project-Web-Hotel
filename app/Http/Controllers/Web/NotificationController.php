@@ -9,7 +9,7 @@ use App\Models\Reservation;
 
 class NotificationController extends Controller
 {
-    public function notification()
+    public function index()
     {
         $notifications = Notification::latest()->get();
 
@@ -28,12 +28,12 @@ class NotificationController extends Controller
         return back()->with('success', 'Semua notifikasi berhasil dihapus.');
     }
 
-    public function refreshNotification()
+    public function refresh()
     {
         $today = now()->toDateString();
 
         $reservations = Reservation::whereDate('check_in', $today)
-            ->where('status', 'dipesan')
+            ->where('status', 'booked')
             ->get();
 
         foreach ($reservations as $reservation) {
@@ -83,7 +83,7 @@ class NotificationController extends Controller
         }
 
         $reservation->rooms()->update([
-            'status'=>'penuh' 
+            'status'=>'occupied' 
         ]);
 
         $reservation->update(['status' => 'check_in']);
@@ -104,7 +104,7 @@ class NotificationController extends Controller
         Room::whereIn(
             'id',
             $reservation->rooms->pluck('id')
-        )->update(['status' => 'tersedia']);
+        )->update(['status' => 'available']);
 
         $reservation->update(['status' => 'check_out']);
 

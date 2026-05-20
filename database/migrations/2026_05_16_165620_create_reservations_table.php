@@ -25,11 +25,11 @@ return new class extends Migration
             $table->json('facilities')->nullable();
 
             $table->enum('status', [
-                'dipesan',
+                'booked',
                 'check_in',
                 'check_out',
-                'dibatalkan'
-            ])->default('dipesan');
+                'cancel'
+            ])->default('booked');
 
             $table->timestamps();
         });

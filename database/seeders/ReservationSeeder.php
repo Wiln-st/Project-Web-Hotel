@@ -21,7 +21,7 @@ class ReservationSeeder extends Seeder
 
         // Reset status semua kamar dulu
         Room::query()->update([
-            'status' => 'tersedia'
+            'status' => 'available'
         ]);
 
         // Hapus reservation lama biar tidak bentrok
@@ -96,7 +96,7 @@ class ReservationSeeder extends Seeder
                 'check_out' => $data['check_out'],
                 'total_price' => $data['total_price'],
                 'facilities' => $data['facilities'],
-                'status' => 'dipesan'
+                'status' => 'booked'
             ]);
 
             // Simpan pivot
@@ -104,7 +104,7 @@ class ReservationSeeder extends Seeder
 
             // Update status kamar
             Room::whereIn('id', $data['rooms'])->update([
-                'status' => 'dipesan'
+                'status' => 'booked'
             ]);
         }
     }

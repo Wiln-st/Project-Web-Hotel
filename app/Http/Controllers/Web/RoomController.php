@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class RoomController extends Controller
 {
-    public function rooms(Request $request)
+    public function index(Request $request)
     {
         $query = Room::with('roomType');
 
@@ -26,10 +26,10 @@ class RoomController extends Controller
         $rooms = $query->orderBy('room_number', 'asc')->get();
         $types = RoomType::all();
         $totalRooms = Room::count();
-        $availableRooms = Room::where('status', 'tersedia')->count();
-        $fullRooms = Room::where('status', 'penuh')->count();
-        $bookedRooms = Room::where('status', 'dipesan')->count();
-        $maintenanceRooms = Room::where('status', 'pemeliharaan')->count();
+        $availableRooms = Room::where('status', 'available')->count();
+        $fullRooms = Room::where('status', 'occupied')->count();
+        $bookedRooms = Room::where('status', 'booked')->count();
+        $maintenanceRooms = Room::where('status', 'maintenance')->count();
         return view('admin.rooms', compact(
             'rooms',
             'types',
@@ -51,7 +51,7 @@ class RoomController extends Controller
         Room::create([
             'room_number' => $request->room_number,
             'room_type_id' => $request->room_type_id,
-            'status' => 'tersedia',
+            'status' => 'available',
         ]);
 
         return back()->with('success', 'Kamar berhasil ditambahkan.');

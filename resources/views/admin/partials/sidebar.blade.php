@@ -37,7 +37,7 @@
                 <p class="px-3 text-xs font-semibold text-slate-400 uppercase tracking-wider">Main Menu</p>
 
                 <!-- Dashboard -->
-                <a href="{{ route('dashboard') }}"
+                <a href="{{ route('admin.dashboard') }}"
                     class="flex items-center px-3 py-2.5 rounded-lg transition-all
                     {{request()->is('admin/dashboard') ? $active : $inactive}}">
                     <i class="fas fa-chart-line w-5"></i>
@@ -45,7 +45,7 @@
                 </a>
 
                 <!-- Kelola Kamar -->
-                <a href="{{ route('rooms.view') }}" 
+                <a href="{{ route('admin.rooms.index') }}" 
                 class="flex items-center px-3 py-2.5 rounded-lg transition-all
                 {{request()->is('admin/rooms') ? $active : $inactive}}">
                     <i class="fas fa-door-open w-5 group-hover:text-amber-500"></i>
@@ -53,30 +53,31 @@
                 </a>
 
                 <!-- Reservasi -->
-                <a href="{{ route('reservation') }}" 
+                <a href="{{ route('admin.reservations.index') }}" 
                 class="flex items-center px-3 py-2.5 rounded-lg transition-all
-                {{request()->is('admin/reservation') ? $active : $inactive}}">
+                {{request()->is('admin/reservations') ? $active : $inactive}}">
                     <i class="fas fa-calendar-check w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Reservasi</span>
                 </a>
 
                 <!-- Histori Pesanan -->
-                <a href="{{ route('reservation.history') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
-                {{request()->is('admin/history') ? $active : $inactive}}">
+                <a href="{{ route('admin.reservations.history') }}" 
+                class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/reservation-history') ? $active : $inactive}}">
                     <i class="fas fa-clock-rotate-left w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Histori Pesanan</span>
                 </a>
 
                 <!-- Kelola Karyawan -->
-                <a href="{{ route('manageemployee') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
-                {{request()->is('admin/manageemployee') ? $active : $inactive}}">
+                <a href="{{ route('admin.employees.index') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/employees') ? $active : $inactive}}">
                     <i class="fas fa-user-gear w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Kelola Karyawan</span>
                 </a>
 
                 <!-- Notifikasi -->
-                <a href="{{ route('notifikasi') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
-                {{request()->is('admin/notifikasi') ? $active : $inactive}}">
+                <a href="{{ route('admin.notifications.index') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
+                {{request()->is('admin/notifications') ? $active : $inactive}}">
                     <i class="fas fa-bell w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Notifikasi</span>
                     <span class="absolute right-2 top-3 w-2 h-2 bg-red-500 rounded-full"></span>
