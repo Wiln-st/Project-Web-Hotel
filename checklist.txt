@@ -45,3 +45,4 @@ Admin :
         - bisa pilih lebih dari 1 kamar pada reservasi *
         - filter kategori kamar di bagian kelola kamar *
         - Date Realtime *
+        - Print Reservasi (Seperti Bill)

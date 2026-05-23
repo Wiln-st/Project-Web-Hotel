@@ -131,20 +131,19 @@ Route::prefix('admin')
         |--------------------------------------------------------------------------
         */
 
-        Route::get('/employees', [EmployeeController::class, 'index'])
+        Route::get('/manage-employees', [EmployeeController::class, 'index'])
             ->name('admin.employees.index');
 
-        Route::post('/employees', [EmployeeController::class, 'store'])
+        Route::post('/manage-employees', [EmployeeController::class, 'store'])
             ->name('admin.employees.store');
 
-        Route::put('/employees/{employee}', [EmployeeController::class, 'update'])
-            ->name('admin.employees.update');
+        // Route::put('/manage-employees/{employee}', [EmployeeController::class, 'update'])
+        //     ->name('admin.employees.update');
 
-        Route::delete('/employees/{employee}', [EmployeeController::class, 'destroy'])
+        Route::delete('/manage-employees/{employee}', [EmployeeController::class, 'destroy'])
             ->name('admin.employees.destroy');
 
-        Route::post('/employees/refresh-status', [EmployeeController::class, 'refreshStatus'])
-            ->name('admin.employees.refreshStatus');
+
     });
 
 

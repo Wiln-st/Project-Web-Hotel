@@ -132,7 +132,9 @@ class ReservationController extends Controller
 
             ->latest()
 
-            ->get();
+            ->paginate(7)
+            
+            ->withQueryString();
 
         $totalReservations = Reservation::count();
 

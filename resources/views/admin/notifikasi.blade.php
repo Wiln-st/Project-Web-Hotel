@@ -55,20 +55,20 @@
                     <div class="flex items-start gap-4">
                         <!-- Icon Badge -->
                         <div class="p-3 rounded-xl 
-                        @if($notification->type == 'checkin')
-                            bg-blue-500/10 text-blue-400 border border-blue-500/20)
-                        @elseif($notification->type == 'checkout')
-                            bg-amber-500/10 text-amber-400 border border-amber-500/20)
+                        @if($notification->type == 'check_in')
+                            bg-blue-500/10 text-blue-400 border border-blue-500/20
+                        @elseif($notification->type == 'check_out')
+                            bg-amber-500/10 text-amber-400 border border-amber-500/20
                         @elseif($notification->type == 'room_system')
-                            bg-emerald-500/10 text-emerald-400 border border-emerald-500/20)
+                            bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
                         @else
-                            bg-purple-500/10 text-purple-400 border border-purple-500/20)
+                            bg-purple-500/10 text-purple-400 border border-purple-500/20
                         @endif
                             flex-shrink-0
                         ">
-                            @if($notification->type == 'checkin')
+                            @if($notification->type == 'check_in')
                             <i class="fas fa-sign-in-alt text-lg"></i>
-                            @elseif($notification->type == 'checkout')
+                            @elseif($notification->type == 'check_out')
                             <i class="fas fa-sign-out-alt text-lg"></i>
                             @elseif($notification->type == 'room_system')
                             <i class="fas fa-tools text-lg"></i>
@@ -80,9 +80,9 @@
                         <div>
                             <div class="flex items-center gap-2">
                                 <span class="text-xs px-2 py-0.5 rounded-md font-semibold
-                                @if($notification->type == 'checkin')
+                                @if($notification->type == 'check_in')
                                     bg-blue-500/10 text-blue-400 border border-blue-500/20
-                                @elseif($notification->type == 'checkout')
+                                @elseif($notification->type == 'check_out')
                                     bg-amber-500/10 text-amber-400 border border-amber-500/20
                                 @elseif($notification->type == 'room_system')
                                     bg-emerald-500/10 text-emerald-400 border border-emerald-500/20
@@ -90,9 +90,9 @@
                                     bg-purple-500/10 text-purple-400 border border-purple-500/20
                                 @endif
                                 ">
-                                    @if($notification->type == 'checkin')
+                                    @if($notification->type == 'check_in')
                                     Check-In
-                                    @elseif($notification->type == 'checkout')
+                                    @elseif($notification->type == 'check_out')
                                     Check-Out
                                     @elseif($notification->type == 'room_system')
                                     Sistem Kamar
@@ -131,7 +131,7 @@
 
                         {{-- BUTTON CHECK-OUT --}}
                         @if($notification->type == 'check_out')
-                        <form action="{{ route('admin.notifications.check_out', $notification->id) }}" method="POST">
+                        <form action="{{ route('admin.notifications.checkOut', $notification->id) }}" method="POST">
                             @csrf
 
                             <button type="submit"

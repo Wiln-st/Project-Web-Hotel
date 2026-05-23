@@ -70,7 +70,7 @@
 
                 <!-- Kelola Karyawan -->
                 <a href="{{ route('admin.employees.index') }}" class="flex items-center px-3 py-2.5 rounded-lg transition-all
-                {{request()->is('admin/employees') ? $active : $inactive}}">
+                {{request()->is('admin/manage-employees') ? $active : $inactive}}">
                     <i class="fas fa-user-gear w-5 group-hover:text-amber-500"></i>
                     <span class="mx-3 font-medium">Kelola Karyawan</span>
                 </a>
