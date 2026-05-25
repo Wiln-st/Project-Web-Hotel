@@ -20,7 +20,7 @@ class ReservationController extends Controller
 
         $rooms = Room::with('roomType')->where('status', 'available')->get();
 
-        return view('admin.reservations', compact('roomTypes', 'rooms'));
+        return view('supervisor.reservations', compact('roomTypes', 'rooms'));
     }
 
     public function store(Request $request)
@@ -140,7 +140,7 @@ class ReservationController extends Controller
 
         $totalIncome = Reservation::sum('total_price');
 
-        return view('admin.history', compact(
+        return view('owner.history', compact(
             'reservations',
             'totalReservations',
             'totalIncome',
@@ -167,7 +167,7 @@ class ReservationController extends Controller
             $query->where('status', 'available');
         }])->get();
 
-        return view('admin.reservations_edit', compact('reservation', 'roomTypes'));
+        return view('supervisor.reservations_edit', compact('reservation', 'roomTypes'));
     }
 
     public function update(Request $request, $id)

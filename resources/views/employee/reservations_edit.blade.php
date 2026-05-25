@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrandStay - Edit Reservasi</title>
     @vite('resources/css/app.css')
+    @include('partials.fouc-script')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
-    @include('admin.partials.sidebar')
+    @include('employee.partials.sidebar')
     <div class="flex min-h-screen">
 
         <!-- ================= MAIN CONTENT ================= -->
@@ -38,7 +39,7 @@
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
                 <!-- Kiri: Input Form (Mengambil 2 Kolom) -->
-                <form id="formReservasi" action="{{ route('admin.reservations.edit', $reservation->id) }}" method="POST" class="lg:col-span-2 space-y-6 bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-6 rounded-2xl shadow-sm">
+                <form id="formReservasi" action="{{ route('employee.reservations.update', $reservation->id) }}" method="POST" class="lg:col-span-2 space-y-6 bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-6 rounded-2xl shadow-sm">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

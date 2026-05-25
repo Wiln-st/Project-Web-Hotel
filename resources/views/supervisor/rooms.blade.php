@@ -8,24 +8,25 @@
     <!-- Tailwind CSS -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     @vite('resources/css/app.css')
+    @include('partials.fouc-script')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
-    @include('admin.partials.sidebar')
+    @include('supervisor.partials.sidebar')
     <div class="flex min-h-screen">
         <!-- ================= MAIN CONTENT ================= -->
         <main class="flex-1 ml-64 p-8 lg:p-10 overflow-y-auto">
 
-            <!-- Header & Role Selector (Untuk Simulasi Demo Admin vs Employee) -->
+            <!-- Header-->
             <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                 <div>
                     <h1 class="text-3xl font-bold tracking-tight text-white dark:text-white light:text-slate-900">Kelola Kamar</h1>
                     <p class="text-sm text-slate-400 dark:text-slate-400 light:text-gray-500 mt-1">Manajemen status ketersediaan, reservasi, dan pemeliharaan kamar.</p>
                 </div>
 
-                <!-- Tombol Tambah Kamar (Hanya Admin) -->
+                <!-- Tombol Tambah Kamar (Hanya supervisor) -->
                 <button id="btnTambahKamar" onclick="openModal('tambahKamarModal')" class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2 shadow-lg shadow-amber-500/10 transition transform active:scale-95">
                     <i class="fas fa-plus"></i> Tambah Kamar
                 </button>
@@ -69,7 +70,7 @@
 
             <!-- ================= BAR FILTER DATA (KATEGORI & STATUS) ================= -->
 
-            <form action="{{ route('admin.rooms.index') }}" method="GET">
+            <form action="{{ route('supervisor.rooms.index') }}" method="GET">
 
                 <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
@@ -86,7 +87,7 @@
 
                         <!-- BUTTON TAMBAH KAMAR -->
                         <button type="button"
-                            data-url="{{ route('admin.rooms.index') }}"
+                            data-url="{{ route('supervisor.rooms.index') }}"
                             onclick="window.location.href=this.dataset.url"
                             class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
                             <i class="fas fa-arrow-rotate-left"></i>
@@ -159,9 +160,9 @@
                                     <button onclick="openModal('infoModal',this)"
                                         data-id="{{ $room->id }}"
                                         data-room="{{ $room->room_number }}"
-                                        data-type="{{ $room->room_type_id }}"
+                                        data-type="{{ $room->roomType->name }}"
                                         data-price="{{ number_format($room->roomType->price) }}"
-                                        data-status="{{ $room->realtime_status }}"
+                                        data-status="{{ $room->status }}"
 
                                         data-customer="{{ optional($room->activeReservation)->customer_name ?? '-' }}"
                                         data-checkin="{{ optional($room->activeReservation)->check_in ?? '-' }}"
@@ -182,7 +183,7 @@
 
                                         <!-- SUBMENU PILIHAN STATUS (Muncul saat menu 'Set Status' di-hover) -->
                                         <div class="absolute left-full top-0 ml-1 hidden group-hover/submenu:block w-44 bg-slate-800 border border-slate-700 rounded-xl shadow-2xl py-1 dark:bg-slate-850 dark:border-slate-700 light:bg-white light:border-gray-200">
-                                            <form action="{{ route('admin.rooms.updateStatus', $room->id ) }}" method="POST">
+                                            <form action="{{ route('supervisor.rooms.updateStatus', $room->id ) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="available">
@@ -190,7 +191,7 @@
                                                     <span class="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span> Available
                                                 </button>
                                             </form>
-                                            <form action="{{ route('admin.rooms.updateStatus', $room->id ) }}" method="POST">
+                                            <form action="{{ route('supervisor.rooms.updateStatus', $room->id ) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="occupied">
@@ -198,7 +199,7 @@
                                                     <span class="w-2 h-2 bg-red-500 rounded-full mr-2"></span> Occupied
                                                 </button>
                                             </form>
-                                            <form action="{{ route('admin.rooms.updateStatus',$room->id) }}" method="POST">
+                                            <form action="{{ route('supervisor.rooms.updateStatus',$room->id) }}" method="POST">
                                                 @csrf
                                                 @method('PATCH')
                                                 <input type="hidden" name="status" value="maintenance">
@@ -208,7 +209,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <form action="{{ route('admin.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
+                                    <form action="{{ route('supervisor.rooms.destroy', $room->id) }}" method="POST" onsubmit="return confirm('Apakah Anda yakin ingin menghapus kamar ini?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="flex items-center w-full px-4 py-2 text-red-400 hover:bg-red-500/10"><i class="fas fa-trash-can w-5"></i> Hapus Kamar</button>
@@ -263,7 +264,7 @@
                     </div>
                     <div>
                         <p class="text-xs text-slate-400">Harga Sewa</p>
-                        <p id="modalRoomPrice" class="font-bold text-amber-500 mt-0.5">Rp 750,000 /malam</p>
+                        <p id="modalRoomPrice" class="font-bold text-amber-500 mt-0.5"></p>
                     </div>
                     <div>
                         <p class="text-xs text-slate-400">Status Kamar</p>
@@ -299,7 +300,7 @@
             </div>
 
             <!-- Modal Form -->
-            <form action="{{ route('admin.rooms.store') }}" method="POST" class="p-6 space-y-4">
+            <form action="{{ route('supervisor.rooms.store') }}" method="POST" class="p-6 space-y-4">
                 @csrf
 
                 <!-- Input Nomor Kamar -->
@@ -564,7 +565,7 @@
 
             // action form
             document.getElementById('editRoomForm')
-                .action = `/admin/rooms/${id}`;
+                .action = `/supervisor/rooms/${id}`;
         }
 
         function closeModal(id) {

@@ -8,12 +8,13 @@
     <!-- Tailwind CSS -->
     <!-- <script src="https://cdn.tailwindcss.com"></script> -->
     @vite('resources/css/app.css')
+    @include('partials.fouc-script')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
-    @include('admin.partials.sidebar')
+    @include('owner.partials.sidebar')
 
     <div class="flex min-h-screen">
 
@@ -34,7 +35,7 @@
 
                     <div class="flex flex-col sm:flex-row items-center gap-3 w-full xl:w-auto">
                         <!-- Form Cari Pesanan -->
-                        <form action="{{ route('admin.reservations.history') }}" method="GET" class="relative w-full sm:w-72">
+                        <form action="{{ route('owner.reservations.history') }}" method="GET" class="relative w-full sm:w-72">
 
                             <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-500 text-xs">
                                 <i class="fas fa-magnifying-glass"></i>
@@ -87,7 +88,6 @@
                                 <th class="py-3 px-4">Fasilitas</th>
                                 <th class="py-3 px-4">Status</th>
                                 <th class="py-3 px-4">Total</th>
-                                <th class="py-3 px-4 text-center">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-xs text-slate-300 dark:text-slate-300 light:text-slate-700 divide-y divide-slate-800/40 dark:divide-slate-800/40 light:divide-gray-100">
@@ -149,14 +149,6 @@
                                 </td>
 
                                 <td class="py-3.5 px-4 font-medium text-amber-500">Rp {{ number_format($reservation->total_price, 0, ',', '.') }}</td>
-                                <td class="py-3.5 px-4 text-center flex items-center justify-center gap-2">
-                                    <form action="{{ route('admin.reservations.destroy', $reservation->id) }}" method="POST" onsubmit="return confirm('Ingin menghapus pesanan ini ?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="text-red-500 hover:text-red-700"><i class="fas fa-trash"></i></button>
-                                    </form>
-                                    <a href="{{ route('admin.reservations.edit', $reservation->id) }}" class="text-green-500 hover:text-green-700"><i class="fas fa-edit"></i></a>
-                                </td>
                             </tr>
 
                             @empty

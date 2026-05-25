@@ -13,7 +13,7 @@ class NotificationController extends Controller
     {
         $notifications = Notification::latest()->get();
 
-        return view('admin.notifikasi', compact('notifications'));
+        return view('owner.notifikasi', compact('notifications'));
     }
 
     public function destroy($id)

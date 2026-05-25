@@ -6,12 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrandStay - Notifikasi Pusat</title>
     @vite('resources/css/app.css')
+    @include('partials.fouc-script')
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 
 <body class="bg-slate-950 text-slate-100 min-h-screen font-sans antialiased transition-colors duration-300 dark:bg-slate-950 light:bg-gray-50 light:text-slate-800">
-    @include('admin.partials.sidebar')
+    @include('supervisor.partials.sidebar')
 
     <div class="flex min-h-screen">
 
@@ -27,14 +28,14 @@
 
                 <!-- Tombol Hapus Semua Notifikasi sekaligus -->
                 <div class="flex items-center gap-3">
-                    <form action="{{ route('admin.notifications.refresh') }}" method="POST">
+                    <form action="{{ route('supervisor.notifications.refresh') }}" method="POST">
                         @csrf
                         <button type="submit"
                             class="bg-amber-500 hover:bg-amber-600 text-slate-900 font-bold px-4 py-2.5 rounded-xl text-sm flex items-center gap-2">
                             <i class="fas fa-arrow-rotate-left"></i>
                         </button>
                     </form>
-                    <form action="{{ route('admin.notifications.clearAll') }}" method="POST">
+                    <form action="{{ route('supervisor.notifications.clearAll') }}" method="POST">
                         @csrf
                         @method('DELETE')
 
@@ -116,7 +117,7 @@
 
                         {{-- BUTTON CHECK-IN --}}
                         @if($notification->type == 'check_in')
-                        <form action="{{ route('admin.notifications.checkIn', $notification->id) }}" method="POST">
+                        <form action="{{ route('supervisor.notifications.checkIn', $notification->id) }}" method="POST">
                             @csrf
 
                             <button type="submit"
@@ -131,7 +132,7 @@
 
                         {{-- BUTTON CHECK-OUT --}}
                         @if($notification->type == 'check_out')
-                        <form action="{{ route('admin.notifications.checkOut', $notification->id) }}" method="POST">
+                        <form action="{{ route('supervisor.notifications.checkOut', $notification->id) }}" method="POST">
                             @csrf
 
                             <button type="submit"
@@ -145,7 +146,7 @@
 
 
                         <!-- Tombol Hapus -->
-                        <form action="{{ route('admin.notifications.destroy', $notification->id) }}" method="POST">
+                        <form action="{{ route('supervisor.notifications.destroy', $notification->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
 
@@ -160,72 +161,6 @@
                     </div>
                 </div>
                 @endforeach
-
-
-                <!-- 2. NOTIFIKASI UPDATE STATUS KAMAR (Informasi Maintenance Selesai) -->
-                <div class="notification-item bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex items-start gap-4">
-                        <!-- Icon Badge -->
-                        <div class="p-3 rounded-xl bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex-shrink-0">
-                            <i class="fas fa-tools text-lg"></i>
-                        </div>
-                        <!-- Konten Teks -->
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-semibold">Sistem Kamar</span>
-                                <span class="text-[11px] text-slate-500">15 menit yang lalu</span>
-                            </div>
-                            <p class="text-sm font-semibold text-white dark:text-white light:text-slate-800 mt-1.5">
-                                Kamar 4 telah tersedia kembali di sistem.
-                            </p>
-                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-gray-500 mt-0.5">
-                                Status kamar diubah secara otomatis setelah sebelumnya berada dalam masa pemeliharaan (*maintenance*).
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Aksi Kanan -->
-                    <div class="flex items-center gap-2 self-end md:self-center">
-                        <button type="button" onclick="hapusNotifikasiTunggal(this)" class="text-slate-500 hover:text-red-400 p-2 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-800 light:hover:bg-gray-100 transition" title="Hapus Notifikasi">
-                            <i class="fas fa-trash-alt text-xs"></i>
-                        </button>
-                    </div>
-                </div>
-
-
-                <!-- 3. NOTIFIKASI INFO CHECK-IN -->
-                <div class="notification-item bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-5 rounded-2xl shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div class="flex items-start gap-4">
-                        <!-- Icon Badge -->
-                        <div class="p-3 rounded-xl bg-blue-500/10 text-blue-400 border border-blue-500/20 flex-shrink-0">
-                            <i class="fas fa-sign-in-alt text-lg"></i>
-                        </div>
-                        <!-- Konten Teks -->
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <span class="text-xs bg-blue-500/10 text-blue-400 border border-blue-500/20 px-2 py-0.5 rounded-md font-semibold">Check-In</span>
-                                <span class="text-[11px] text-slate-500">1 jam yang lalu</span>
-                            </div>
-                            <p class="text-sm font-semibold text-white dark:text-white light:text-slate-800 mt-1.5">
-                                Kunjungan Baru: Melinda Putri sukses melakukan check-in.
-                            </p>
-                            <p class="text-xs text-slate-400 dark:text-slate-400 light:text-gray-500 mt-0.5">
-                                Tamu telah diverifikasi kartu identitasnya dan menempati Kamar 204 (Tipe Deluxe).
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Tombol Aksi Kanan -->
-                    <div class="flex items-center gap-2 self-end md:self-center">
-                        <!-- Tombol Centang Konfirmasi Kamar Tersedia -->
-                        <button type="button" onclick="konfirmasiKamarTersedia('Kamar 102', this)" class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm shadow-emerald-500/10" title="Konfirmasi Kamar Tersedia">
-                            <i class="fas fa-check-circle text-sm"></i> Check-in
-                        </button>
-                        <button type="button" onclick="hapusNotifikasiTunggal(this)" class="text-slate-500 hover:text-red-400 p-2 rounded-xl hover:bg-slate-800 dark:hover:bg-slate-800 light:hover:bg-gray-100 transition" title="Hapus Notifikasi">
-                            <i class="fas fa-trash-alt text-xs"></i>
-                        </button>
-                    </div>
-                </div>
 
             </div>
         </main>

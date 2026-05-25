@@ -23,10 +23,12 @@ class AuthWebController extends Controller
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
-            if (Auth::user()->role === 'admin') {
-                return redirect('admin/dashboard');
+            if (Auth::user()->role === 'owner') {
+                return redirect('owner/dashboard');
 
-            } elseif (Auth::user()->role === 'employee') {
+            } elseif (Auth::user()->role === 'supervisor') {
+                return redirect('supervisor/rooms');
+            }else {
                 return redirect('employee/rooms');
             }
         }

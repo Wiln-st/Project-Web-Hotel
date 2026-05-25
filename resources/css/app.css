@@ -10,3 +10,7 @@
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
 
+@variant dark (&:where(.dark, .dark *));
+@variant light (&:where(.light, .light *));
+
+
