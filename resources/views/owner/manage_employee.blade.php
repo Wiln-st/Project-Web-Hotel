@@ -28,8 +28,8 @@
 
                 <!-- Tombol Refresh Status Karyawan -->
                 <div>
-                    <button type="button" onclick="refreshStatus()" class="w-full md:w-auto bg-slate-800 hover:bg-slate-750 text-slate-200 font-semibold px-5 py-2.5 rounded-xl border border-slate-700 transition flex items-center justify-center gap-2 text-sm shadow-sm">
-                        <i class="fas fa-sync-alt text-amber-500"></i> Refresh Status Karyawan
+                    <button type="button" onclick="refreshStatus()" class="w-full md:w-auto bg-amber-500 hover:bg-amber-600 text-slate-900 font-semibold px-5 py-2.5 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-sm">
+                        <i class="fas fa-sync-alt text-slate-900"></i> Refresh Status Karyawan
                     </button>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <div class="overflow-x-auto">
                         <table class="w-full text-left border-collapse">
                             <thead>
-                                <tr class="border-b border-slate-800/80 dark:border-slate-800/80 light:border-gray-100 bg-slate-950/20 text-slate-400 text-xs uppercase font-bold tracking-wider">
+                                <tr class="border-b border-slate-800/80 dark:border-slate-800/80 light:border-gray-100 bg-slate-950/20 light:text-slate-900 dark:text-slate-200 text-xs uppercase font-bold tracking-wider">
                                     <th class="py-4 px-6">Nama</th>
                                     <th class="py-4 px-6">No. HP</th>
                                     <th class="py-4 px-6">Email</th>

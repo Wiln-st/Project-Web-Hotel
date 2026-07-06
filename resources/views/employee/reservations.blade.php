@@ -86,7 +86,7 @@
 
                         <!-- Tombol Reset Semua Kamar sekaligus jika kategori berjumlah ganjil / genap tetap presisi -->
                         <div class="md:col-span-1 flex justify-end items-end">
-                            <button type="button" onclick="resetAllSelect()" class=" w-full justify-center text-xs bg-slate-800 hover:bg-slate-750 text-slate-300 px-4 py-2 rounded-xl border border-slate-700 transition flex items-center gap-2 cursor-pointer">
+                            <button type="button" onclick="resetAllSelect()" class=" w-full justify-center text-xs dark:bg-slate-800 light:bg-gray-50 light:border-gray-300 hover:bg-slate-750 light:text-slate-800 light:text-slate-300 px-4 py-2 rounded-xl border border-slate-700 transition flex items-center gap-2 cursor-pointer">
                                 <i class="fas fa-arrow-rotate-left"></i> Reset Semua Pilihan Kamar
                             </button>
                         </div>

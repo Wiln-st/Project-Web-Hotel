@@ -67,14 +67,14 @@
 
             <form action="{{ route('owner.rooms.index') }}" method="GET">
 
-                <div class="bg-slate-900 border border-slate-800 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                <div class="bg-slate-900 border border-slate-800 dark:bg-slate-900 dark:border-slate-800 light:bg-white light:border-gray-200 p-4 rounded-2xl mb-8 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
 
                     <!-- LEFT SIDE -->
                     <div class="flex items-center gap-2">
-                        <span class="p-2 bg-slate-800 text-slate-400 rounded-xl text-sm">
+                        <span class="p-2 dark:bg-slate-800 light:bg-slate-200 dark:text-slate-400 light:text-slate-700 rounded-xl text-sm">
                             <i class="fas fa-filter"></i>
                         </span>
-                        <p class="text-sm font-semibold text-slate-300">Filter Data</p>
+                        <p class="text-sm font-semibold dark:text-slate-200 light:text-slate-900">Filter Data</p>
                     </div>
 
                     <!-- RIGHT SIDE -->

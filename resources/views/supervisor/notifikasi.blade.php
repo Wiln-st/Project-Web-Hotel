@@ -40,7 +40,7 @@
                         @method('DELETE')
 
                         <button
-                            type="submit" class="w-full sm:w-auto bg-slate-900 hover:bg-slate-850 text-red-400 font-semibold px-4 py-2.5 rounded-xl border border-slate-800 hover:border-red-500/30 transition flex items-center justify-center gap-2 text-xs shadow-sm">
+                            type="submit" class="w-full sm:w-auto bg-amber-500 hover:bg-slate-850 text-slate-900 font-semibold px-4 py-2.5 rounded-xl hover:border-red-500/30 transition flex items-center justify-center gap-2 text-xs shadow-sm">
                             <i class="fas fa-trash-can"></i>
                             Bersihkan Semua Notifikasi
                         </button>
@@ -121,7 +121,7 @@
                             @csrf
 
                             <button type="submit"
-                                class="bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm shadow-emerald-500/10">
+                                class="bg-emerald-500 hover:bg-emerald-600 text-green-200 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm shadow-emerald-500/10">
 
                                 <i class="fas fa-check-circle text-sm"></i>
                                 Check-In
@@ -136,7 +136,7 @@
                             @csrf
 
                             <button type="submit"
-                                class="bg-sky-500 hover:bg-sky-600 text-slate-950 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm shadow-sky-500/10">
+                                class="bg-sky-500 hover:bg-sky-600 text-sky-200 font-bold text-xs px-3 py-2 rounded-xl transition flex items-center gap-1.5 shadow-sm shadow-sky-500/10">
 
                                 <i class="fas fa-right-from-bracket text-sm"></i>
                                 Check-Out
@@ -151,7 +151,7 @@
                             @method('DELETE')
 
                             <button
-                                class="text-slate-500 hover:text-red-400 p-2 rounded-xl hover:bg-slate-800 transition"
+                                class="text-slate-500 hover:text-red-400 p-2 rounded-xl hover:bg-slate-800 light:hover:bg-slate-200 transition"
                                 title="Hapus">
 
                                 <i class="fas fa-trash-alt text-xs"></i>
