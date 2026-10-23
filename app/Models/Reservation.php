@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Reservation extends Model
 {
     protected $fillable = [
-        'room_id',
         'customer_name',
         'phone',
         'check_in',
@@ -21,8 +20,13 @@ class Reservation extends Model
         'facilities' => 'array',
     ];
 
-    public function room()
+    public function rooms()
     {
-        return $this->belongsTo(Room::class);
+        return $this->belongsToMany(Room::class);
+    }
+
+    public function notifications()
+    {
+        return $this->hasMany(Notification::class);
     }
 }

@@ -15,12 +15,12 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $role): Response
     {
-            if ($request->user()->role !== $role) {
-        return response()->json([
-            'message' => 'Unauthorized'
-        ], 403);
-    }
+        if ($request->user()->role !== $role) {
+            return response()->json([
+                'message' => 'Unauthorized'
+            ], 403);
+        }
 
-    return $next($request);
+        return $next($request);
     }
 }
